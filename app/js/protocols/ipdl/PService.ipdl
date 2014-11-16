@@ -1,0 +1,6 @@
+
+protocol PService
+{
+  child:
+    ApplyUpdate(updatedFiles);
+}

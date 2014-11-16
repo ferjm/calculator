@@ -1,0 +1,9 @@
+
+protocol PUpdate
+{
+  child:
+    CheckForUpdate();
+    ApplyUpdate(updateUrl);
+
+  parent:
+};
