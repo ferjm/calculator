@@ -4,9 +4,11 @@ importScripts('/js/protocols/protocol_helper.js');
 
 var implementation = {
   recvApplyUpdate: function(promise) {
-    // XXX Can be stuck if updatedFiles is empty
+    var filesToUpdate = 0;
+
     var rv = promise.args.updatedFiles;
     for (var filename in rv) {
+      fileToUpdate++;
       caches.match(filename).then(function(response) {
         caches.open('calculator-cache-v4').then(function(cache) {
           var opts = {
@@ -15,9 +17,17 @@ var implementation = {
           var response = new Response(rv[filename], opts);
           cache.put(filename, response);
 
-          promise.resolve(true);
+          filesToUpdate--;
+          if (filesToUpdate === 0) {
+            promise.resolve(true);
+          }
         });
       });
+    }
+
+    // There was nothing to update...
+    if (filesToUpdate === 0) {
+      promise.reject(false);
     }
   }
 };
