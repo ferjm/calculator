@@ -8,7 +8,12 @@ function debug(str) {
 }
 
 function importScripts(script) {
-  if (document.querySelector('script[src="' + script + '"]')) {
+  var prefix = '';
+  if (document.location.toString().indexOf('github') !== -1) {
+    prefix = '/calculator';
+  }
+
+  if (document.querySelector('script[src="' + prefix + script + '"]')) {
     return;
   }
 
