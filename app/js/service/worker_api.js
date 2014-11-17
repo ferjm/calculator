@@ -1,6 +1,6 @@
 'use strict';
 
-importScripts('/js/protocols/protocol_helper.js');
+importScripts('/app/js/protocols/protocol_helper.js');
 
 var implementation = {
   recvApplyUpdate: function(promise) {
@@ -8,19 +8,20 @@ var implementation = {
 
     var rv = promise.args.updatedFiles;
     for (var filename in rv) {
-      fileToUpdate++;
+      filesToUpdate++;
+
       caches.match(filename).then(function(response) {
         caches.open('calculator-cache-v4').then(function(cache) {
           var opts = {
             'headers': { 'content-type': 'text/css' }
           };
           var response = new Response(rv[filename], opts);
-          cache.put(filename, response);
-
-          filesToUpdate--;
-          if (filesToUpdate === 0) {
-            promise.resolve(true);
-          }
+          cache.put(filename, response).then(function onSaved() {
+            filesToUpdate--;
+            if (filesToUpdate === 0) {
+              promise.resolve(true);
+            }
+          });
         });
       });
     }

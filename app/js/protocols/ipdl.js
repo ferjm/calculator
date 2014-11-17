@@ -3,10 +3,10 @@
 // Ideally those should be some kind of virtual files, generated at
 // runtime based on the PUpdate.ipdl file.
 // But for now, I'm lazy.
-importScripts('/js/protocols/update/child.js');
-importScripts('/js/protocols/update/parent.js');
-importScripts('/js/protocols/service/child.js');
-importScripts('/js/protocols/service/parent.js');
+importScripts('/app/js/protocols/update/child.js');
+importScripts('/app/js/protocols/update/parent.js');
+importScripts('/app/js/protocols/service/child.js');
+importScripts('/app/js/protocols/service/parent.js');
 
 function ParentIPDL(name, impl) {
   this.emitter = null;
@@ -59,7 +59,7 @@ ChildIPDL.prototype.parse = function(name, impl) {
 /*
 // XXX Let's do all the parsing code later.
 // For now, we will just return pre-build JS object.
-importScripts('/js/protocols/lexer.js');
+importScripts('/app/js/protocols/utils/lexer.js');
 IPDL.prototype.parse = function() {
   var lexer = new Lexer;
 

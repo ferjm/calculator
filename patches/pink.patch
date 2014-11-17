@@ -1,0 +1,19 @@
+diff --git a/app/style/calculator.css b/app/style/calculator.css
+index 1d6ec61..27d4a10 100644
+--- a/app/style/calculator.css
++++ b/app/style/calculator.css
+@@ -11,3 +11,3 @@ html, body {
+ 
+-.x-row{
++.x-row {
+   width: 32rem;
+@@ -18,3 +18,3 @@ html, body {
+ 
+-.y-row{
++.y-row {
+   display: inline-block;
+@@ -128,3 +128,3 @@ input::-moz-focus-inner {
+   color: white;
+-  background-color: #f97c17;
++  background-color: pink;
+   height: 15.6rem;

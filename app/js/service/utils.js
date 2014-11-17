@@ -2,7 +2,7 @@
 
 // |caches| is not working in chrome nor firefox right now, so let's
 // use indexedDB as a temporary backend.
-importScripts('/js/service/cache-polyfill.js');
+importScripts('/app/js/service/cache-polyfill.js');
 
 function debug(str) {
   console.log('ServiceWorker: ' + str);

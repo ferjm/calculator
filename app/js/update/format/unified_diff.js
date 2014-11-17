@@ -71,7 +71,7 @@ var UnifiedDiff = {
     return files;
 
     function addFile(line) {
-      var filename = line.split(' ')[2].replace('a/app', '');
+      var filename = line.split(' ')[2].replace('a/', '/');
 
       files[filename] = {
         hunks: [],

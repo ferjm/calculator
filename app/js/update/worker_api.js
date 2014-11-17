@@ -1,19 +1,18 @@
 'use strict';
 
-importScripts('/js/protocols/protocol_helper.js');
-importScripts('/js/update/utils.js');
-importScripts('/js/update/config.js');
+importScripts('/app/js/protocols/protocol_helper.js');
+importScripts('/app/js/update/utils.js');
+importScripts('/app/js/update/config.js');
 
 var implementation = {
   recvCheckForUpdate: function(promise) {
-    Config.getUpdateUrl().then(
-      function onUpdateUrlSuccess(updateUrl) {
+    Config.getUpdateInfos().then(
+      function onUpdateInfosSuccess(updateUrl, updateHeaders) {
         var xhr = new XMLHttpRequest();
         xhr.open('GET', updateUrl, true);
 
-        var headers = Config.getUpdateHeaders();
-        for (var header in headers) {
-          xhr.setRequestHeader(header, headers[header]);
+        for (var header in updateHeaders) {
+          xhr.setRequestHeader(header, updateHeaders[header]);
         }
 
         xhr.send();
@@ -33,21 +32,21 @@ var implementation = {
         };
       },
 
-      function onUpdateUrlError(rv) {
+      function onUpdateInfosError(rv) {
         promise.reject(rv);
       }
     );
   },
 
   recvApplyUpdate: function(promise) {
-    Config.getUpdateUrl().then(
-      function onUpdateUrlSuccess(updateUrl) {
+    Config.getUpdateInfos().then(
+      function onUpdateUrlSuccess(updateUrl, updateHeaders) {
         // XXX Use the returned url, instead of a param
         var rv = UpdateUtils.apply(promise.args.updateUrl);
         promise.resolve(rv);
       },
 
-      function onUpdateUrlError(rv) {
+      function onUpdateInfosError(rv) {
         promise.reject(rv);
       }
     );

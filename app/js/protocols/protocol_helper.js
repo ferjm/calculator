@@ -120,8 +120,8 @@
 //
 //  ProtocolHelper.newChildProtocol(self, 'update', implementation);
 //  
-importScripts('/js/protocols/utils/uuid.js');
-importScripts('/js/protocols/ipdl.js');
+importScripts('/app/js/protocols/utils/uuid.js');
+importScripts('/app/js/protocols/ipdl.js');
 
 var ProtocolHelper = {
 };

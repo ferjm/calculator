@@ -1,43 +1,46 @@
 'use strict';
 
-importScripts('/js/service/utils.js');
-importScripts('/js/service/worker_api.js');
+importScripts('/app/js/service/utils.js');
+importScripts('/app/js/service/worker_api.js');
 
 var kCacheFiles = [
   // html
-  '/',
-  '/index.html',
+  '/app/',
+  '/app/index.html',
 
   // style
-  '/style/calculator.css',
+  '/app/style/calculator.css',
+
+  // config
+  '/app/config.json',
 
   // scripts
-  '/js/utils.js',
-  '/js/client_service_worker.js',
-  '/js/calculator.js',
+  '/app/js/utils.js',
+  '/app/js/client_service_worker.js',
+  '/app/js/calculator.js',
 
   // updates
-  '/js/update/api.js',
-  '/js/update/worker_api.js',
-  '/js/update/utils.js',
-  '/js/update/config.js',
-  '/js/update/format/unified_diff.js',
+  '/app/js/update/api.js',
+  '/app/js/update/worker_api.js',
+  '/app/js/update/utils.js',
+  '/app/js/update/config.js',
+  '/app/js/update/format/unified_diff.js',
 
   // service worker helpers
-  '/js/service/api.js',
-  '/js/service/worker_api.js',
-  '/js/service/utils.js',
-  '/js/service/cache-polyfill.js',
+  '/app/js/service/api.js',
+  '/app/js/service/worker_api.js',
+  '/app/js/service/utils.js',
+  '/app/js/service/cache-polyfill.js',
 
   // protocols
-  '/js/protocols/ipdl.js',
-  '/js/protocols/lexer.js',
-  '/js/protocols/uuid.js',
-  '/js/protocols/protocol_helper.js',
-  '/js/protocols/update/child.js',
-  '/js/protocols/update/parent.js',
-  '/js/protocols/service/child.js',
-  '/js/protocols/service/parent.js'
+  '/app/js/protocols/ipdl.js',
+  '/app/js/protocols/lexer.js',
+  '/app/js/protocols/uuid.js',
+  '/app/js/protocols/protocol_helper.js',
+  '/app/js/protocols/update/child.js',
+  '/app/js/protocols/update/parent.js',
+  '/app/js/protocols/service/child.js',
+  '/app/js/protocols/service/parent.js'
 ];
 
 var worker = new ServiceWorker();
