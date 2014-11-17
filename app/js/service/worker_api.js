@@ -1,6 +1,6 @@
 'use strict';
 
-importScripts('/app/js/protocols/protocol_helper.js');
+importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 var implementation = {
   recvApplyUpdate: function(promise) {

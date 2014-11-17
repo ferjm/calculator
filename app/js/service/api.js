@@ -1,11 +1,11 @@
 'use strict';
 
-importScripts('/app/js/protocols/protocol_helper.js');
+importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function ServiceAPI() {
-  var kWorkerUrl = '/app/service_worker.js';
+  var kWorkerUrl = '/calculator/app/service_worker.js';
   var kWorkerOptions = {
-    'scope': [ '/app/foo/' ]
+    'scope': [ '/calculator/app/foo/' ]
   };
 
   navigator.serviceWorker.register(kWorkerUrl, kWorkerOptions).then(

@@ -30,7 +30,7 @@ function lookForUpdates() {
       return;
     }
 
-    updateAPI.applyUpdate('/patches/pink.patch').then(function(rv) {
+    updateAPI.applyUpdate('/calculator/patches/pink.patch').then(function(rv) {
       window.serviceAPI.applyUpdate(rv).then(function(rv) {
         document.location.reload();
       });

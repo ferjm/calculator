@@ -1,8 +1,8 @@
 'use strict';
 
-importScripts('/app/js/protocols/protocol_helper.js');
-importScripts('/app/js/update/utils.js');
-importScripts('/app/js/update/config.js');
+importScripts('/calculator/app/js/protocols/protocol_helper.js');
+importScripts('/calculator/app/js/update/utils.js');
+importScripts('/calculator/app/js/update/config.js');
 
 var implementation = {
   recvCheckForUpdate: function(promise) {

@@ -1,46 +1,46 @@
 'use strict';
 
-importScripts('/app/js/service/utils.js');
-importScripts('/app/js/service/worker_api.js');
+importScripts('/calculator/app/js/service/utils.js');
+importScripts('/calculator/app/js/service/worker_api.js');
 
 var kCacheFiles = [
   // html
-  '/app/',
-  '/app/index.html',
+  '/calculator/app/',
+  '/calculator/app/index.html',
 
   // style
-  '/app/style/calculator.css',
+  '/calculator/app/style/calculator.css',
 
   // config
-  '/app/config.json',
+  '/calculator/app/config.json',
 
   // scripts
-  '/app/js/utils.js',
-  '/app/js/client_service_worker.js',
-  '/app/js/calculator.js',
+  '/calculator/app/js/utils.js',
+  '/calculator/app/js/client_service_worker.js',
+  '/calculator/app/js/calculator.js',
 
   // updates
-  '/app/js/update/api.js',
-  '/app/js/update/worker_api.js',
-  '/app/js/update/utils.js',
-  '/app/js/update/config.js',
-  '/app/js/update/format/unified_diff.js',
+  '/calculator/app/js/update/api.js',
+  '/calculator/app/js/update/worker_api.js',
+  '/calculator/app/js/update/utils.js',
+  '/calculator/app/js/update/config.js',
+  '/calculator/app/js/update/format/unified_diff.js',
 
   // service worker helpers
-  '/app/js/service/api.js',
-  '/app/js/service/worker_api.js',
-  '/app/js/service/utils.js',
-  '/app/js/service/cache-polyfill.js',
+  '/calculator/app/js/service/api.js',
+  '/calculator/app/js/service/worker_api.js',
+  '/calculator/app/js/service/utils.js',
+  '/calculator/app/js/service/cache-polyfill.js',
 
   // protocols
-  '/app/js/protocols/ipdl.js',
-  '/app/js/protocols/lexer.js',
-  '/app/js/protocols/uuid.js',
-  '/app/js/protocols/protocol_helper.js',
-  '/app/js/protocols/update/child.js',
-  '/app/js/protocols/update/parent.js',
-  '/app/js/protocols/service/child.js',
-  '/app/js/protocols/service/parent.js'
+  '/calculator/app/js/protocols/ipdl.js',
+  '/calculator/app/js/protocols/lexer.js',
+  '/calculator/app/js/protocols/uuid.js',
+  '/calculator/app/js/protocols/protocol_helper.js',
+  '/calculator/app/js/protocols/update/child.js',
+  '/calculator/app/js/protocols/update/parent.js',
+  '/calculator/app/js/protocols/service/child.js',
+  '/calculator/app/js/protocols/service/parent.js'
 ];
 
 var worker = new ServiceWorker();

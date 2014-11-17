@@ -31,7 +31,7 @@
 // correct format parser.
 //
 
-importScripts('/app/js/update/format/unified_diff.js');
+importScripts('/calculator/app/js/update/format/unified_diff.js');
 
 var UpdateUtils = {
   apply: function uu_apply(updateUrl) {
