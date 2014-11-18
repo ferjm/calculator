@@ -25,12 +25,12 @@ function lookForUpdates() {
   var updateAPI = new UpdateAPI();
   updateAPI.checkForUpdate().then(function(rv) {
     var length = formatLength(rv);
-    var str = 'Update found (' + length + 'b). Apply it ?';
+    var str = 'Update found (' + length + '). Apply it ?';
     if (!window.confirm(str)) {
       return;
     }
 
-    updateAPI.applyUpdate('/calculator/patches/pink.patch').then(function(rv) {
+    updateAPI.applyUpdate().then(function(rv) {
       window.serviceAPI.applyUpdate(rv).then(function(rv) {
         document.location.reload();
       });

@@ -41,8 +41,11 @@ var implementation = {
   recvApplyUpdate: function(promise) {
     Config.getUpdateInfos().then(
       function onUpdateUrlSuccess(updateUrl, updateHeaders) {
-        // XXX Use the returned url, instead of a param
-        var rv = UpdateUtils.apply(promise.args.updateUrl);
+        if (promise.args.updateUrl)
+          updateUrl = promise.args.updateUrl;
+        }
+
+        var rv = UpdateUtils.apply(updateUrl);
         promise.resolve(rv);
       },
 
