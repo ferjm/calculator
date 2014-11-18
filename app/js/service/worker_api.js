@@ -12,6 +12,7 @@ var implementation = {
 
       caches.match(filename).then((function(filename, response) {
         caches.open('calculator-cache-v4').then((function(filename, cache) {
+
           var opts = {};
           if (filename.indexOf('.css') !== -1) {
             opts['headers'] = { 'content-type': 'text/css' };

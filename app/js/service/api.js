@@ -2,7 +2,7 @@
 
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
-function ServiceAPI() {
+function ServiceAPI(callback) {
   var kWorkerUrl = '/calculator/app/service_worker.js';
   var kWorkerOptions = {
     'scope': [ '/calculator/app/' ]
@@ -29,6 +29,7 @@ function ServiceAPI() {
       this.protocol =
         ProtocolHelper.newParentProtocol(target, 'service');
 
+      callback && callback();
       debug('Registered');
     }).bind(this),
 

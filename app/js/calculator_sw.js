@@ -1,9 +1,9 @@
 'use strict';
 
 addEventListener('load', function onLoad(e) {
-  window.serviceAPI = new ServiceAPI();
-
-  lookForUpdates();
+  window.serviceAPI = new ServiceAPI(function() {
+    lookForUpdates();
+  });
 });
 
 function formatLength(bytes) {
@@ -32,7 +32,9 @@ function lookForUpdates() {
 
     updateAPI.applyUpdate().then(function(rv) {
       window.serviceAPI.applyUpdate(rv).then(function(rv) {
-        document.location.reload(true);
+        setTimeout(function() {
+          document.location.reload(true);
+        });
       });
     });
   });
