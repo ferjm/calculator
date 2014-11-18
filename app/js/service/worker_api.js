@@ -4,6 +4,7 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 var implementation = {
   recvApplyUpdate: function(promise) {
+    var self = this;
     var filesToUpdate = 0;
 
     var rv = promise.args.updatedFiles;
@@ -13,26 +14,19 @@ var implementation = {
       caches.match(filename).then((function(filename, response) {
         caches.open('calculator-cache-v4').then((function(filename, cache) {
 
-          var opts = {};
-          if (filename.indexOf('.css') !== -1) {
-            opts['headers'] = { 'content-type': 'text/css' };
-          } else if (filename.indexOf('.json') !== -1) {
-            opts['headers'] = { 'content-type': 'application/json' };
-          } else if (filename.indexOf('.js') !== -1) {
-            opts['headers'] = { 'content-type': 'application/javascript' };
-          } else if (filename.indexOf('.html') !== -1) {
-            opts['headers'] = { 'content-type': 'text/html' };
-          }
-
           var originalUrl = response.url;
-          var newResponse = new Response(rv[filename], opts);
-          cache.put(originalUrl, newResponse).then(function onSaved() {
-            filesToUpdate--;
-            if (filesToUpdate === 0) {
-              promise.resolve(true);
-            }
-          });
+          cache.delete(originalUrl).then(function onDeleted() {
+            var opts = {};
+            opts['headers'] = { 'content-type': self._getContentType(filename) };
 
+            var newResponse = new Response(rv[filename], opts);
+            cache.put(originalUrl, newResponse).then(function onSaved() {
+              filesToUpdate--;
+              if (filesToUpdate === 0) {
+                promise.resolve(true);
+              }
+            });
+          });
         }).bind(this, filename));
       }).bind(this, filename));
     }
@@ -41,6 +35,20 @@ var implementation = {
     if (filesToUpdate === 0) {
       promise.reject(false);
     }
+  },
+
+  _getContentType: function(filename) {
+    if (filename.indexOf('.css') !== -1) {
+      return 'text/css';
+    } else if (filename.indexOf('.json') !== -1) {
+      return 'application/json';
+    } else if (filename.indexOf('.js') !== -1) {
+      return 'application/javascript';
+    } else if (filename.indexOf('.html') !== -1) {
+      return 'text/html';
+    }
+
+    return 'text/plain';
   }
 };
 
