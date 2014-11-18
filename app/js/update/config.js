@@ -4,7 +4,7 @@ var Config = {
   getUpdateInfos: function config_getUpdateUrl() {
     var promise = new Promise(function(resolve, reject) {
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', '/calculator/app/config.json', true);
+      xhr.open('GET', '/calculator/app/config.json?' + Date.now(), true);
       xhr.send();
 
       xhr.onload = function() {
