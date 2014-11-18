@@ -20,7 +20,7 @@ function lookForUpdates() {
   updateAPI.checkForUpdate().then(function(rv) {
     // There is no difference between the current version and the
     // next version.
-    if (rv.length === 0) {
+    if (rv === 0) {
       return;
     }
 
