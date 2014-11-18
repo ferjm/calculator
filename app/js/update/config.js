@@ -27,7 +27,10 @@ var Config = {
 
         var updateHeaders = json.update.headers;
 
-        resolve(updateUrl, updateHeaders);
+        resolve({
+          'url': updateUrl,
+          'headers': updateHeaders
+        });
       };
 
       xhr.onerror = function() {

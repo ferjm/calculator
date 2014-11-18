@@ -207,7 +207,7 @@ var Protocol = function(target, name, schema) {
     };
 
     promise.args = data.args;
-    schema.receiver['recv' + data.method].call(schema, promise);
+    schema.receiver['recv' + data.method].call(schema.receiver, promise);
   };
 
   return schema.emitter;

@@ -16,8 +16,8 @@ var kCacheFiles = [
 
   // scripts
   '/calculator/app/js/utils.js',
-  '/calculator/app/js/client_service_worker.js',
   '/calculator/app/js/calculator.js',
+  '/calculator/app/js/calculator_sw.js',
 
   // updates
   '/calculator/app/js/update/api.js',
@@ -59,13 +59,9 @@ worker.oninstall = function(e) {
 // network events
 
 worker.onfetch = function(e) {
-  // It sounds simpler to replicate the app content on a
-  // different url than the original one for dev purposes.
-  var url = e.request.url.replace('foo/', '');
-
   e.respondWith(
-    caches.match(url).then(function(response) {
-      return response || fetch(url);
+    caches.match(e.request.url).then(function(response) {
+      return response || fetch(e.request);
     })
   );
 };

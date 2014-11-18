@@ -6,30 +6,23 @@ importScripts('/calculator/app/js/update/config.js');
 
 var implementation = {
   recvCheckForUpdate: function(promise) {
+    var self = this;
+
     Config.getUpdateInfos().then(
-      function onUpdateInfosSuccess(updateUrl, updateHeaders) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', updateUrl, true);
+      function onUpdateInfosSuccess(updateInfos) {
+        self._getFileContent(updateInfos).then(
+          function onFileContentSuccess(content) {
+            // XXX Ideally we would just perform a HEAD requet instead
+            // of a GET, and retrieve the Content-Length header.
+            //     But github, does not seems to allow that :(
+            //var length = this.getResponseHeader('Content-Length');
+            promise.resolve(content.length);
+          },
 
-        for (var header in updateHeaders) {
-          xhr.setRequestHeader(header, updateHeaders[header]);
-        }
-
-        xhr.send();
-
-        xhr.onload = function() {
-          // XXX Ideally we would just perform a HEAD requet instead
-          // of a GET, and retrieve the Content-Length header.
-          //     But github, does not seems to allow that :(
-          //var length = this.getResponseHeader('Content-Length');
-
-          var length = this.responseText.length;
-          promise.resolve(length);
-        };
-  
-        xhr.onerror = function() {
-          promise.reject(this.status);
-        };
+          function onFileContentError(rv) {
+            promise.reject(rv);
+          }
+        );
       },
 
       function onUpdateInfosError(rv) {
@@ -39,20 +32,55 @@ var implementation = {
   },
 
   recvApplyUpdate: function(promise) {
+    var self = this;
+
     Config.getUpdateInfos().then(
-      function onUpdateUrlSuccess(updateUrl, updateHeaders) {
+      function onUpdateUrlSuccess(updateInfos) {
         if (promise.args.updateUrl) {
-          updateUrl = promise.args.updateUrl;
+          updateInfos = {
+            'url': promise.args.updateUrl,
+            'headers': {}
+          };
         }
 
-        var rv = UpdateUtils.apply(updateUrl);
-        promise.resolve(rv);
+
+        self._getFileContent(updateInfos).then(
+          function onFileContentSuccess(content) {
+            var rv = UpdateUtils.apply(content);
+            promise.resolve(rv);
+          },
+
+          function onFileContentError(rv) {
+            promise.reject(rv);
+          }
+        );
       },
 
       function onUpdateInfosError(rv) {
         promise.reject(rv);
       }
     );
+  },
+
+  _getFileContent: function(infos) {
+    return new Promise(function onFileContent(resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', infos.url, true);
+
+      for (var header in infos.headers) {
+        xhr.setRequestHeader(header, infos.headers[header]);
+      }
+
+      xhr.send();
+
+      xhr.onload = function() {
+        resolve(this.responseText);
+      };
+
+      xhr.onerror = function() {
+        reject(this.status);
+      };
+    });
   }
 };
 

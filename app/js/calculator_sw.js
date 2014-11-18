@@ -3,14 +3,8 @@
 addEventListener('load', function onLoad(e) {
   window.serviceAPI = new ServiceAPI();
 
-  if (documentIsManaged()) {
-    lookForUpdates();
-  }
+  lookForUpdates();
 });
-
-function documentIsManaged() {
-  return document.location.toString().indexOf('foo') !== -1;
-}
 
 function formatLength(bytes) {
   var prefix = ['','K','M','G','T','P','E','Z','Y'];

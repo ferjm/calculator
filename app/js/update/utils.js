@@ -34,8 +34,8 @@
 importScripts('/calculator/app/js/update/format/unified_diff.js');
 
 var UpdateUtils = {
-  apply: function uu_apply(updateUrl) {
-    var ir = UnifiedDiff.parse(this._getFileContent(updateUrl));
+  apply: function uu_apply(updateContent) {
+    var ir = UnifiedDiff.parse(updateContent);
     return this._applyIR(ir);
   },
 
