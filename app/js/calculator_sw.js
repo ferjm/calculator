@@ -18,6 +18,12 @@ function formatLength(bytes) {
 function lookForUpdates() {
   var updateAPI = new UpdateAPI();
   updateAPI.checkForUpdate().then(function(rv) {
+    // There is no difference between the current version and the
+    // next version.
+    if (rv.length === 0) {
+      return;
+    }
+
     var length = formatLength(rv);
     var str = 'Update found (' + length + '). Apply it ?';
     if (!window.confirm(str)) {
