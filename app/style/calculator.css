@@ -126,7 +126,7 @@ input::-moz-focus-inner {
 /* Result Display */
 #display {
   color: white;
-  background-color: #f97c17;
+  background-color: pink;
   height: 15.6rem;
   line-height: 15.6rem;
   width: 32rem;
