@@ -41,7 +41,7 @@ var implementation = {
   recvApplyUpdate: function(promise) {
     Config.getUpdateInfos().then(
       function onUpdateUrlSuccess(updateUrl, updateHeaders) {
-        if (promise.args.updateUrl)
+        if (promise.args.updateUrl) {
           updateUrl = promise.args.updateUrl;
         }
 
