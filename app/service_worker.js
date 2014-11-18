@@ -34,8 +34,8 @@ var kCacheFiles = [
 
   // protocols
   '/calculator/app/js/protocols/ipdl.js',
-  '/calculator/app/js/protocols/lexer.js',
-  '/calculator/app/js/protocols/uuid.js',
+  '/calculator/app/js/protocols/utils/lexer.js',
+  '/calculator/app/js/protocols/utils/uuid.js',
   '/calculator/app/js/protocols/protocol_helper.js',
   '/calculator/app/js/protocols/update/child.js',
   '/calculator/app/js/protocols/update/parent.js',
