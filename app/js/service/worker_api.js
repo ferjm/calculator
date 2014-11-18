@@ -10,20 +10,26 @@ var implementation = {
     for (var filename in rv) {
       filesToUpdate++;
 
-      caches.match(filename).then(function(response) {
-        caches.open('calculator-cache-v4').then(function(cache) {
-          var opts = {
-            'headers': { 'content-type': 'text/css' }
-          };
-          var response = new Response(rv[filename], opts);
-          cache.put(filename, response).then(function onSaved() {
+      caches.match(filename).then((function(filename, response) {
+        caches.open('calculator-cache-v4').then((function(filename, cache) {
+          var opts = {};
+          if (filename.indexOf('.css') !== -1) {
+            opts['headers'] = { 'content-type': 'text/css' };
+          } else if (filename.indexOf('.json') !== -1) {
+            opts['headers'] = { 'content-type': 'application/json' };
+          }
+
+          var originalUrl = response.url;
+          var newResponse = new Response(rv[filename], opts);
+          cache.put(originalUrl, newResponse).then(function onSaved() {
             filesToUpdate--;
             if (filesToUpdate === 0) {
               promise.resolve(true);
             }
           });
-        });
-      });
+
+        }).bind(this, filename));
+      }).bind(this, filename));
     }
 
     // There was nothing to update...

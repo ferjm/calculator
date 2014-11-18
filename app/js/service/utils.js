@@ -27,8 +27,6 @@ function ServiceWorker() {
 };
 
 ServiceWorker.prototype.handleEvent = function(e) {
-  debug(e.type);
-
   if (!this['on' + e.type]) {
     return;
   }

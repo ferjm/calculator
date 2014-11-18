@@ -5,7 +5,7 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 function ServiceAPI() {
   var kWorkerUrl = '/calculator/app/service_worker.js';
   var kWorkerOptions = {
-    'scope': [ '/calculator/app/foo/' ]
+    'scope': [ '/calculator/app/' ]
   };
 
   navigator.serviceWorker.register(kWorkerUrl, kWorkerOptions).then(

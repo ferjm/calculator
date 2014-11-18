@@ -28,7 +28,11 @@ var UnifiedDiff = {
       [/^\+\+\+\s/, nop],
       [/^@@\s+\-(\d+),(\d+)\s+\+(\d+),(\d+)\s@@/, addHunk],
       [/^-/, addDeletion],
-      [/^\+/, addAddition]
+      [/^\+/, addAddition],
+      [/^From\s/, nop],
+      [/^Date\s/, nop],
+      [/^Subject\s/, nop],
+      [/^---$/, nop]
     ];
 
     function parse(line) {
@@ -82,11 +86,19 @@ var UnifiedDiff = {
     };
 
     function addHunk(line) {
+      if (!currentFilename) {
+        return;
+      }
+
       currentPosition = line.split(' ')[2].split(',')[0].replace('-', '');
       files[currentFilename].hunks.push(line);
     };
 
     function addDeletion(line) {
+      if (!currentFilename) {
+        return;
+      }
+
       files[currentFilename].operations.push({
         'type': 'deletion',
         'lineNumber': currentPosition
@@ -94,6 +106,10 @@ var UnifiedDiff = {
     };
 
     function addAddition(line) {
+      if (!currentFilename) {
+        return;
+      }
+
       files[currentFilename].operations.push({
         'type': 'addition',
         'lineNumber': currentPosition,
