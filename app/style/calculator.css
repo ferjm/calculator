@@ -9,14 +9,14 @@ html, body {
   background-color: #2b2b2b;
 }
 
-.x-row {
+.x-row{
   width: 32rem;
   height: 6rem;
   background-color: #2b2b2b;
   display: block;
 }
 
-.y-row {
+.y-row{
   display: inline-block;
   background-color: #2b2b2b;
   width: 8rem;
@@ -33,7 +33,7 @@ html, body {
   height: 24rem;
 }
 
-.row {
+.row{
   display: block;
   width: 100%;
 }
@@ -126,7 +126,7 @@ input::-moz-focus-inner {
 /* Result Display */
 #display {
   color: white;
-  background-color: pink;
+  background-color: #f97c17;
   height: 15.6rem;
   line-height: 15.6rem;
   width: 32rem;
