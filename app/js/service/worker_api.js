@@ -17,6 +17,10 @@ var implementation = {
             opts['headers'] = { 'content-type': 'text/css' };
           } else if (filename.indexOf('.json') !== -1) {
             opts['headers'] = { 'content-type': 'application/json' };
+          } else if (filename.indexOf('.js') !== -1) {
+            opts['headers'] = { 'content-type': 'application/javascript' };
+          } else if (filename.indexOf('.html') !== -1) {
+            opts['headers'] = { 'content-type': 'text/html' };
           }
 
           var originalUrl = response.url;
