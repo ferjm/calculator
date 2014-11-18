@@ -32,7 +32,7 @@ function lookForUpdates() {
 
     updateAPI.applyUpdate().then(function(rv) {
       window.serviceAPI.applyUpdate(rv).then(function(rv) {
-        document.location.reload(true);
+        document.location.reload();
       });
     });
   });
