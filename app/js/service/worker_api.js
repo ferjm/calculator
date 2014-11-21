@@ -2,6 +2,19 @@
 
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
+
+function listCache(cb) {
+  caches.open('calculator-cache-v4').then(function(cache) {
+    cache.keys().then(function(requests) {
+      requests.forEach(function(request) {
+        console.log(request.url);
+      });
+
+      cb && cb();
+    });
+  });
+}
+
 var implementation = {
   recvApplyUpdate: function(promise) {
     var self = this;
@@ -14,13 +27,21 @@ var implementation = {
       caches.match(filename).then((function(filename, response) {
         caches.open('calculator-cache-v4').then((function(filename, cache) {
 
-          var originalUrl = response.url;
-          cache.delete(originalUrl).then(function onDeleted() {
-            var opts = {};
-            opts['headers'] = { 'content-type': self._getContentType(filename) };
+          var originalUrl = filename;
+          var opts = {
+            'headers': { 'content-type': self._getContentType(filename) },
+            'type': 'basic'
+          };
 
+          var request = new Request(originalUrl, {
+            'url': originalUrl,
+            'headers': opts
+          });
+
+          cache.delete(originalUrl).then(function onDeleted() {
             var newResponse = new Response(rv[filename], opts);
             cache.put(originalUrl, newResponse).then(function onSaved() {
+
               filesToUpdate--;
               if (filesToUpdate === 0) {
                 promise.resolve(true);

@@ -59,8 +59,22 @@ worker.oninstall = function(e) {
 // network events
 
 worker.onfetch = function(e) {
+  // Chrome has a fun cache issue with XHR from an other worker and
+  // ServiceWorker. So in order to workaround it, a timestamp is
+  // added to the url, to make sure the request ends up in the
+  // service worker.
+  // In order to retrieve the correct match, it needs to be removed
+  // before looking into the database.
+  // XXX e.request.url may have a better way to know the params.
+  var url = e.request.url;
+  if (url.indexOf('?') !== -1) {
+    url = url.replace(/\?.+/, '');
+    // XXX It seems to help for a race. Makes no sense.
+    debug('');
+  }
+
   e.respondWith(
-    caches.match(e.request.url).then(function(response) {
+    caches.match(url).then(function(response) {
       return response || fetch(e.request);
     })
   );
