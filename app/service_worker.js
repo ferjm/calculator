@@ -4,7 +4,6 @@ importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/static.js');
 importScripts('/calculator/app/js/service/worker_api.js');
 importScripts('/calculator/app/js/cachestorage/worker_api.js');
-importScripts('/calculator/app/js/cache/worker_api.js');
 
 var kCacheFiles = [
   // html
@@ -48,19 +47,17 @@ var kCacheFiles = [
 
 var worker = new ServiceWorker();
 var cachesAPI = new CacheStorageAPI();
-var cacheAPI = new CacheAPI();
 
 // lifecycle events
 
 worker.oninstall = function(e) {
-  // XXX For the moment, for beeing compatible with Firefox, this part is done
-  // on the hidden window side.
-
-  //e.waitUntil(
-    //caches.open('calculator-cache-v4').then(function(cache) {
-      //return cache.addAll(kCacheFiles);
-    //})
-  //);
+  /*
+  e.waitUntil(
+    cachesAPI.open('calculator-cache-v4').then(function(cache) {
+      return cache.addAll(kCacheFiles);
+    })
+  );
+  */
 };
 
 

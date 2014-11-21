@@ -28,3 +28,8 @@ CacheAPI.prototype.delete = function(key) {
   return this.protocol.sendDelete(key);
 };
 
+CacheAPI.prototype.getAll = function(files) {
+  return new Promise(function(resolve, reject) {
+    resolve();
+  });
+};

@@ -1,6 +1,7 @@
 'use strict';
 
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
+importScripts('/calculator/app/js/cache/worker_api.js');
 
 function CacheStorageAPI() {
   var target = {
@@ -16,12 +17,18 @@ function CacheStorageAPI() {
       });
     }
   };
+
   this.protocol =
     ProtocolHelper.newParentProtocol(target, 'cacheStorage');
+
+  this.cache = new CacheAPI();
 }
 
 CacheStorageAPI.prototype.open = function(key) {
-  return this.protocol.sendOpen(key);
+  var cache = this.cache;
+  return new Promise(function(resolve, reject) {
+    resolve(cache);
+  });
 };
 
 CacheStorageAPI.prototype.match = function(key) {
@@ -33,12 +40,7 @@ CacheStorageAPI.prototype.match = function(key) {
         var opts = {
           headers: { 'content-type': self._getContentType(key) }
         };
-
-        if (content) {
-          resolve(new Response(content, opts));
-        } else {
-          resolve(null);
-        }
+        resolve(content ? new Response(content, opts) : null);
       },
 
       function onMatchError(rv) {
