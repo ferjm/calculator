@@ -34,7 +34,11 @@ CacheStorageAPI.prototype.match = function(key) {
           headers: { 'content-type': self._getContentType(key) }
         };
 
-        resolve(new Response(content, opts));
+        if (content) {
+          resolve(new Response(content, opts));
+        } else {
+          resolve(null);
+        }
       },
 
       function onMatchError(rv) {
