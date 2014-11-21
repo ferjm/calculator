@@ -8,7 +8,7 @@ window.addEventListener('load', function() {
     recvMatch: function(promise) {
       var key = promise.args.key;
 
-      asyncStorage.get(key, function(value) {
+      asyncStorage.getItem(key, function(value) {
         promise.resolve(value);
       });
     }
