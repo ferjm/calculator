@@ -14,16 +14,13 @@ var implementation = {
       cachesAPI.match(filename).then((function(filename, response) {
         cachesAPI.open('calculator-cache-v4').then((function(filename, cache) {
 
-          debug('patching cache ' + filename);
           var originalUrl = filename;
           cache.delete(originalUrl).then(function onDeleted() {
-            debug('delete cache ' + filename);
             var opts = {};
             opts['headers'] = { 'content-type': self._getContentType(filename) };
 
             var newResponse = new Response(rv[filename], opts);
             cache.put(originalUrl, rv[filename]).then(function onSaved() {
-              debug('put cache ' + filename);
               filesToUpdate--;
               if (filesToUpdate === 0) {
                 promise.resolve(true);
