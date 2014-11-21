@@ -22,13 +22,13 @@ macro inlineCache {
     letstx $t = [makeValue(type, null)];
     letstx $com = [makePunc(',', null)];
 
-    return #{ $f: {content: $c, opts: { 'content-type' : $t }} $com }
+    return #{ $f: {content: $c, opts: { 'headers': { 'content-type' : $t }}} $com }
   }
 }
 
 var StaticResources = {
   handle: function sr_handle(e) {
-    return Object.keys(this.ressources).some(function(key) {
+    return Object.keys(this.resources).some(function(key) {
       if (e.request.url.endsWith(key)) {
         var resource = this.resources[key];
         e.respondWith(
@@ -41,13 +41,16 @@ var StaticResources = {
       }
 
       return false;
-    });
+    }, this);
   },
 
   resources: {
     inlineCache '/app/cache.html'
-    inlineCache '/app/js/service/api.js'
-    inlineCache '/app/js/service/utils.js'
-    inlineCache '/app/js/protocols/service/parent.js'
+    inlineCache '/app/js/utils.js'
+    inlineCache '/app/js/protocols/ipdl.js'
+    inlineCache '/app/js/protocols/protocol_helper.js'
+    inlineCache '/app/js/protocols/cachestorage/child.js'
+    inlineCache '/app/js/protocols/cachestorage/parent.js'
+    inlineCache '/app/js/cachestorage/api.js'
   }
 };

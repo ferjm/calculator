@@ -56,7 +56,7 @@ function populateDatabase() {
     '/calculator/app/js/protocols/update/child.js',
     '/calculator/app/js/protocols/update/parent.js',
     '/calculator/app/js/protocols/service/child.js',
-    '/calculator/app/js/protocols/service/parent.js'
+    '/calculator/app/js/protocols/service/parent.js',
     '/calculator/app/js/protocols/cachestorage/child.js',
     '/calculator/app/js/protocols/cachestorage/parent.js',
     '/calculator/app/js/protocols/cache/child.js',
