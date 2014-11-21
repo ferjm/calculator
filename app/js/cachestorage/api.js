@@ -49,17 +49,20 @@ window.addEventListener('load', function() {
 
   for (var i = 0; i < kCacheFiles.length; i++) {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', kCacheFiles[i], false);
+    xhr.open('GET', kCacheFiles[i], true);
     xhr.send();
 
-    var key = location.protocol + '//' + location.host + kCacheFiles[i];
-    asyncStorage.setItem(key, xhr.responseText);
+    xhr.onload = function() {
+      var key = location.protocol + '//' + location.host + kCacheFiles[i];
+      asyncStorage.setItem(key, xhr.responseText);
+    }
   }
 
   var implementation = {
     recvMatch: function(promise) {
       var key = promise.args.key;
 
+      debug('recvMatch: ' + key);
       asyncStorage.getItem(key, function(value) {
         promise.resolve(value);
       });
