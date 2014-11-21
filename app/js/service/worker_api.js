@@ -38,13 +38,13 @@ var implementation = {
   },
 
   _getContentType: function(filename) {
-    if (filename.indexOf('.css') !== -1) {
+    if (filename.endsWith('.css')) {
       return 'text/css';
-    } else if (filename.indexOf('.json') !== -1) {
+    } else if (filename.endsWith('.json')) {
       return 'application/json';
-    } else if (filename.indexOf('.js') !== -1) {
+    } else if (filename.endsWith('.js')) {
       return 'application/javascript';
-    } else if (filename.indexOf('.html') !== -1) {
+    } else if (filename.endsWith('.html')) {
       return 'text/html';
     }
 

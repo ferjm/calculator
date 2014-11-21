@@ -1,10 +1,5 @@
 'use strict';
 
-// XXX Firefox compat with latest spec
-if ('getServiced' in clients) {
-  clients.getAll = clients.getServiced;
-}
-
 importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/static.js');
 importScripts('/calculator/app/js/service/worker_api.js');
@@ -58,6 +53,9 @@ var cacheAPI = new CacheAPI();
 // lifecycle events
 
 worker.oninstall = function(e) {
+  // XXX For the moment, for beeing compatible with Firefox, this part is done
+  // on the hidden window side.
+
   //e.waitUntil(
     //caches.open('calculator-cache-v4').then(function(cache) {
       //return cache.addAll(kCacheFiles);

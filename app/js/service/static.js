@@ -2,7 +2,7 @@
 
 var StaticResources = {
   handle: function sr_handle(e) {
-    if (e.request.url.indexOf('cache.html') !== -1) {
+    if (e.request.url.endsWith('cache.html')) {
       var resource = this.resources['cache.html'];
       e.respondWith(
         new Promise(function(resolve, reject) {
