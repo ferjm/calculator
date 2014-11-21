@@ -48,14 +48,16 @@ window.addEventListener('load', function() {
   ];
 
   for (var i = 0; i < kCacheFiles.length; i++) {
+    var name = kCacheFiles[i];
+
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', kCacheFiles[i], true);
+    xhr.open('GET', name, true);
     xhr.send();
 
-    xhr.onload = function() {
-      var key = location.protocol + '//' + location.host + kCacheFiles[i];
-      asyncStorage.setItem(key, xhr.responseText);
-    }
+    xhr.onload = (function(name) {
+      var key = location.protocol + '//' + location.host + name;
+      asyncStorage.setItem(key, this.responseText);
+    }).bind(xhr, name);
   }
 
   var implementation = {

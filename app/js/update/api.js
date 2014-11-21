@@ -3,7 +3,7 @@
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function UpdateAPI() {
-  var worker = new Worker('/calculator//app/js/update/worker_api.js');
+  var worker = new Worker('/calculator/app/js/update/worker_api.js');
   this.protocol = ProtocolHelper.newParentProtocol(worker, 'update');
 }
 
