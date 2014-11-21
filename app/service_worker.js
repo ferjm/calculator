@@ -45,7 +45,7 @@ var kCacheFiles = [
 ];
 
 var worker = new ServiceWorker();
-var caches = new CacheStorageAPI();
+var cachesAPI = new CacheStorageAPI();
 
 // lifecycle events
 
@@ -64,18 +64,24 @@ worker.onfetch = function(e) {
   debug('in fetch ' + e.type + ' ' + e.request.url);
   if (e.request.url.endsWith('cache.html')) {
     e.respondWith(new Promise(function(resolve, reject) {
-      resolve(new Response('<html><head><title>Cache Polyfill</title></head></html>'));
+      var opts = {
+        headers: { 'content-type': 'text/html' }
+      };
+      resolve(new Response('<html><head><title>Cache Polyfill</title><script src="/calculator/app/js/cachestorage/api.js"></script></head></html>', opts));
+    }));
+  } else if (e.request.url.endsWith('syn.html')) {
+    e.respondWith(new Promise(function(resolve, reject) {
+      cachesAPI.match(e.request.url).then(function(c) {
+        debug('got content ' + c);
+        var opts = {
+          headers: { 'content-type': 'text/html' }
+        };
+        resolve(new Response(c, opts));
+      });
     }));
   } else {
     e.respondWith(
       fetch(e.request)
     );
   }
-};
-
-worker.onmessage = function(e) {
-  debug('got message' + e.data.text + ' ' + e.data.origin);
-  caches.match('/blah').then(function(c) {
-    debug('got content ' + c);
-  });
 };

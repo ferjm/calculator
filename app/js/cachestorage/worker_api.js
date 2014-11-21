@@ -16,13 +16,8 @@ function CacheStorageAPI() {
       });
     }
   };
-  try {
-    this.protocol =
-      ProtocolHelper.newParentProtocol(target, 'cacheStorage');
-  } catch (e) {
-    debug(e)
-    debug(e.stack.caller)
-  }
+  this.protocol =
+    ProtocolHelper.newParentProtocol(target, 'cacheStorage');
 }
 
 CacheStorageAPI.prototype.match = function(request) {
