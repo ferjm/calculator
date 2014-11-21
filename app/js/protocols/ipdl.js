@@ -9,6 +9,8 @@ importScripts('/calculator/app/js/protocols/service/child.js');
 importScripts('/calculator/app/js/protocols/service/parent.js');
 importScripts('/calculator/app/js/protocols/cachestorage/child.js');
 importScripts('/calculator/app/js/protocols/cachestorage/parent.js');
+importScripts('/calculator/app/js/protocols/cache/child.js');
+importScripts('/calculator/app/js/protocols/cache/parent.js');
 
 function ParentIPDL(name, impl) {
   this.emitter = null;

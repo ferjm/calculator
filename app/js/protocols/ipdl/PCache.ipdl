@@ -1,0 +1,7 @@
+
+protocol PCache
+{
+  child:
+    Put(key, response);
+    Delete(key);
+}

@@ -1,6 +1,7 @@
 
-protocol PService
+protocol PCacheStorage
 {
   child:
-    Match(request);
+    Open(key);
+    Match(key);
 }

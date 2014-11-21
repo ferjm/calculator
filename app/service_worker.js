@@ -1,8 +1,14 @@
 'use strict';
 
+// XXX Firefox compat with latest spec
+if ('getServiced' in clients) {
+  clients.getAll = clients.getServiced;
+}
+
 importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/worker_api.js');
 importScripts('/calculator/app/js/cachestorage/worker_api.js');
+importScripts('/calculator/app/js/cache/worker_api.js');
 
 var kCacheFiles = [
   // html
@@ -46,6 +52,7 @@ var kCacheFiles = [
 
 var worker = new ServiceWorker();
 var cachesAPI = new CacheStorageAPI();
+var cacheAPI = new CacheAPI();
 
 // lifecycle events
 
@@ -62,14 +69,14 @@ worker.oninstall = function(e) {
 
 worker.onfetch = function(e) {
   debug('in fetch ' + e.type + ' ' + e.request.url);
-  if (e.request.url.endsWith('cache.html')) {
+  if (e.request.url.indexOf('cache.html') !== -1) {
     e.respondWith(new Promise(function(resolve, reject) {
       var opts = {
         headers: { 'content-type': 'text/html' }
       };
       resolve(new Response('<html><head><title>Cache Polyfill</title><script src="/calculator/app/js/cachestorage/api.js"></script></head></html>', opts));
     }));
-  } else if (e.request.url.endsWith('syn.html')) {
+  } else if (e.request.url.indexOf('syn.html') !== -1) {
     e.respondWith(new Promise(function(resolve, reject) {
       cachesAPI.match(e.request.url).then(function(c) {
         debug('got content ' + c);

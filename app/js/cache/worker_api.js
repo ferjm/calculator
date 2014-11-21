@@ -2,7 +2,7 @@
 
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
-function CacheStorageAPI() {
+function CacheAPI() {
   var target = {
     addEventListener: function(type, callback) {
       addEventListener(type, callback);
@@ -17,14 +17,14 @@ function CacheStorageAPI() {
     }
   };
   this.protocol =
-    ProtocolHelper.newParentProtocol(target, 'cacheStorage');
+    ProtocolHelper.newParentProtocol(target, 'cache');
 }
 
-CacheStorageAPI.prototype.open = function(key) {
-  return this.protocol.sendOpen(key);
+CacheAPI.prototype.put = function(key, response) {
+  return this.protocol.sendPut(key, response);
 };
 
-CacheStorageAPI.prototype.match = function(key) {
-  return this.protocol.sendMatch(key);
+CacheAPI.prototype.delete = function(key) {
+  return this.protocol.sendDelete(key);
 };
 

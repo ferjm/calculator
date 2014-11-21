@@ -1,19 +1,20 @@
 'use strict';
 
-var PCacheStorageParent = {
+var PCacheParent = {
   'child': {
-    sendOpen: function(key) {
+    sendPut: function(key, response) {
       return this._call(
-        'Open',
+        'Put',
         {
-          'key': key
+          'key': key,
+          'response': response,
         }
       );
     },
 
-    sendMatch: function(key) {
+    sendDelete: function(key) {
       return this._call(
-        'Match',
+        'Delete',
         {
           'key': key
         }
