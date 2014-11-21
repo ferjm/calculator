@@ -52,6 +52,12 @@ var StaticResources = {
     inlineCache '/app/js/protocols/protocol_helper.js'
     inlineCache '/app/js/protocols/cachestorage/child.js'
     inlineCache '/app/js/protocols/cachestorage/parent.js'
+    inlineCache '/app/js/protocols/cache/child.js'
+    inlineCache '/app/js/protocols/cache/parent.js'
+    inlineCache '/app/js/protocols/update/child.js'
+    inlineCache '/app/js/protocols/update/parent.js'
+    inlineCache '/app/js/protocols/service/child.js'
+    inlineCache '/app/js/protocols/service/parent.js'
     inlineCache '/app/js/cachestorage/api.js'
   }
 };
