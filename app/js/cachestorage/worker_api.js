@@ -25,6 +25,19 @@ CacheStorageAPI.prototype.open = function(key) {
 };
 
 CacheStorageAPI.prototype.match = function(key) {
-  return this.protocol.sendMatch(key);
+  var self = this;
+
+  return new Promise(function(resolve, reject) {
+    self.protocol.sendMatch(key).then(
+      function onMatchSuccess(content) {
+        var opts = { headers: { 'content-type': 'text/html' } };
+        resolve(new Response(content, opts));
+      },
+
+      function onMatchError(rv) {
+        resolve(null);
+      }
+    );
+  });
 };
 
