@@ -17,3 +17,5 @@ node_modules/
 *.swp
 *.swo
 *~
+
+app/js/service/static.js
