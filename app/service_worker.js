@@ -2,6 +2,7 @@
 
 importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/worker_api.js');
+importScripts('/calculator/app/js/cachestorage/worker_api.js');
 
 var kCacheFiles = [
   // html
@@ -44,25 +45,37 @@ var kCacheFiles = [
 ];
 
 var worker = new ServiceWorker();
+var caches = new CacheStorageAPI();
 
 // lifecycle events
 
 worker.oninstall = function(e) {
-  e.waitUntil(
-    caches.open('calculator-cache-v4').then(function(cache) {
-      return cache.addAll(kCacheFiles);
-    })
-  );
+  //e.waitUntil(
+    //caches.open('calculator-cache-v4').then(function(cache) {
+      //return cache.addAll(kCacheFiles);
+    //})
+  //);
 };
 
 
 // network events
 
 worker.onfetch = function(e) {
-  e.respondWith(
-    caches.match(e.request.url).then(function(response) {
-      return response || fetch(e.request);
-    })
-  );
+  debug('in fetch ' + e.type + ' ' + e.request.url);
+  if (e.request.url.endsWith('cache.html')) {
+    e.respondWith(new Promise(function(resolve, reject) {
+      resolve(new Response('<html><head><title>Cache Polyfill</title></head></html>'));
+    }));
+  } else {
+    e.respondWith(
+      fetch(e.request)
+    );
+  }
 };
 
+worker.onmessage = function(e) {
+  debug('got message' + e.data.text + ' ' + e.data.origin);
+  caches.match('/blah').then(function(c) {
+    debug('got content ' + c);
+  });
+};
