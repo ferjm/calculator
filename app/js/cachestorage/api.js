@@ -11,6 +11,13 @@ window.addEventListener('load', function() {
     // style
     '/calculator/app/style/calculator.css',
 
+    // images
+    '/calculator/app/style/images/icon_plus.png',
+    '/calculator/app/style/images/icon_equal.png',
+    '/calculator/app/style/images/icon_divide.png',
+    '/calculator/app/style/images/icon_minus.png',
+    '/calculator/app/style/images/icon_multiply.png',
+
     // config
     '/calculator/app/config.json',
 
@@ -61,8 +68,12 @@ window.addEventListener('load', function() {
         asyncStorage.setItem(key, this.responseText, function() {
           count--;
           if (count === 0) {
-            document.getElementById('content').src =
-              '/calculator/app/index.html';
+            new ServiceAPI(function() {
+              // XXX I have seen some crashes!!!. So setTimeout :/
+              setTimeout(function() {
+                location = location;
+              });
+            })
           }
         });
       }).bind(xhr, name);
