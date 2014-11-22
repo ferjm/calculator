@@ -33,7 +33,13 @@ function lookForUpdates() {
     updateAPI.applyUpdate().then(function(rv) {
       window.serviceAPI.applyUpdate(rv).then(function(rv) {
         setTimeout(function() {
-          window.location.reload();
+          // XXX Ideally we would just use window.location.reload()
+          //     but this seems to ignore the service worker...
+          if (window.frameElement) {
+            window.frameElement.src = window.frameElement.src;
+          } else {
+            window.location.reload();
+          }
         });
       });
     });

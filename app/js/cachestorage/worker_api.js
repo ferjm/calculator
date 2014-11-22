@@ -35,18 +35,27 @@ CacheStorageAPI.prototype.match = function(key) {
   var self = this;
 
   return new Promise(function(resolve, reject) {
-    self.protocol.sendMatch(key).then(
-      function onMatchSuccess(content) {
-        var opts = {
-          headers: { 'content-type': self._getContentType(key) }
-        };
-        resolve(content ? new Response(content, opts) : null);
-      },
-
-      function onMatchError(rv) {
+    clients.getAll().then(function(windows) {
+      // Ensure there is someone on the other side.
+      if (!windows.length) {
         resolve(null);
+        return;
       }
-    );
+
+      // There is someone to answer, lets send it the message.
+      self.protocol.sendMatch(key).then(
+        function onMatchSuccess(content) {
+          var opts = {
+            headers: { 'content-type': self._getContentType(key) }
+          };
+          resolve(content ? new Response(content, opts) : null);
+        },
+
+        function onMatchError(rv) {
+          resolve(null);
+        }
+      );
+    });
   });
 };
 

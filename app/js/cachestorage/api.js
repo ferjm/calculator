@@ -47,17 +47,31 @@ window.addEventListener('load', function() {
     '/calculator/app/js/protocols/cache/parent.js'
   ];
 
-  for (var i = 0; i < kCacheFiles.length; i++) {
-    var name = kCacheFiles[i];
+  if (!navigator.serviceWorker.controller) {
+    var count = kCacheFiles.length;
+    for (var i = 0; i < kCacheFiles.length; i++) {
+      var name = kCacheFiles[i];
 
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', name, true);
-    xhr.send();
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', name, true);
+      xhr.send();
 
-    xhr.onload = (function(name) {
-      var key = location.protocol + '//' + location.host + name;
-      asyncStorage.setItem(key, this.responseText);
-    }).bind(xhr, name);
+      xhr.onload = (function(name) {
+        var key = location.protocol + '//' + location.host + name;
+        asyncStorage.setItem(key, this.responseText, function() {
+          count--;
+          if (count === 0) {
+            document.getElementById('content').src =
+              '/calculator/app/index.html';
+          }
+        });
+      }).bind(xhr, name);
+    }
+  } else {
+    setTimeout(function() {
+      document.getElementById('content').src =
+        '/calculator/app/index.html';
+    });
   }
 
   var implementation = {
