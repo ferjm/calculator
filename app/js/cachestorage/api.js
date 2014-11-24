@@ -12,11 +12,11 @@ window.addEventListener('load', function() {
     '/calculator/app/style/calculator.css',
 
     // images
-    '/calculator/app/style/images/icon_plus.png',
-    '/calculator/app/style/images/icon_equal.png',
-    '/calculator/app/style/images/icon_divide.png',
-    '/calculator/app/style/images/icon_minus.png',
-    '/calculator/app/style/images/icon_multiply.png',
+    //'/calculator/app/style/images/icon_plus.png',
+    //'/calculator/app/style/images/icon_equal.png',
+    //'/calculator/app/style/images/icon_divide.png',
+    //'/calculator/app/style/images/icon_minus.png',
+    //'/calculator/app/style/images/icon_multiply.png',
 
     // config
     '/calculator/app/config.json',

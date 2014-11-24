@@ -1,5 +1,6 @@
 'use strict';
 
+importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 importScripts('/calculator/app/js/cache/worker_api.js');
 
@@ -46,7 +47,7 @@ CacheStorageAPI.prototype.match = function(key) {
       self.protocol.sendMatch(key).then(
         function onMatchSuccess(content) {
           var opts = {
-            headers: { 'content-type': self._getContentType(key) }
+            headers: { 'content-type': getContentType(key) }
           };
           resolve(content ? new Response(content, opts) : null);
         },
@@ -57,18 +58,4 @@ CacheStorageAPI.prototype.match = function(key) {
       );
     });
   });
-};
-
-CacheStorageAPI.prototype._getContentType = function(filename) {
-  if (filename.endsWith('.css')) {
-    return 'text/css';
-  } else if (filename.endsWith('.json')) {
-    return 'application/json';
-  } else if (filename.endsWith('.js')) {
-    return 'application/javascript';
-  } else if (filename.endsWith('.html')) {
-    return 'text/html';
-  }
-
-  return 'text/plain';
 };

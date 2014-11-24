@@ -108,7 +108,7 @@ input[value="×"]{
 
 input[value="÷"]{
   border-right: .1rem solid #191919;
-  background: url(images/divide.png) center no-repeat;
+  background: url(images/icon_divide.png) center no-repeat;
   color: transparent;
 }
 
@@ -229,7 +229,7 @@ input::-moz-focus-inner {
   }
 
   input[value="÷"]{
-    background: url(images/divide@1.5x.png) center no-repeat;
+    background: url(images/icon_divide@1.5x.png) center no-repeat;
   }
 
   input[value="="]{
@@ -251,7 +251,7 @@ input::-moz-focus-inner {
   }
 
   input[value="÷"]{
-    background: url(images/divide@2x.png) center no-repeat;
+    background: url(images/icon_divide@2x.png) center no-repeat;
   }
 
   input[value="="]{

@@ -1,5 +1,6 @@
 'use strict';
 
+importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 var implementation = {
@@ -17,9 +18,8 @@ var implementation = {
           var originalUrl = filename;
           cache.delete(originalUrl).then(function onDeleted() {
             var opts = {};
-            opts['headers'] = { 'content-type': self._getContentType(filename) };
+            opts['headers'] = { 'content-type': getContentType(filename) };
 
-            var newResponse = new Response(rv[filename], opts);
             cache.put(originalUrl, rv[filename]).then(function onSaved() {
               filesToUpdate--;
               if (filesToUpdate === 0) {
@@ -35,20 +35,6 @@ var implementation = {
     if (filesToUpdate === 0) {
       promise.reject(false);
     }
-  },
-
-  _getContentType: function(filename) {
-    if (filename.endsWith('.css')) {
-      return 'text/css';
-    } else if (filename.endsWith('.json')) {
-      return 'application/json';
-    } else if (filename.endsWith('.js')) {
-      return 'application/javascript';
-    } else if (filename.endsWith('.html')) {
-      return 'text/html';
-    }
-
-    return 'text/plain';
   }
 };
 
