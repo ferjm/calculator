@@ -51,12 +51,17 @@ window.addEventListener('load', function() {
     '/calculator/app/js/protocols/cachestorage/child.js',
     '/calculator/app/js/protocols/cachestorage/parent.js',
     '/calculator/app/js/protocols/cache/child.js',
-    '/calculator/app/js/protocols/cache/parent.js'
+    '/calculator/app/js/protocols/cache/parent.js',
+
+
+    // Caching those for now since fetch isn't working properly
+    '/calculator/patches/nightly_0.0.1...nightly_master',
+    '/calculator/patches/nightly_0.0.1.1...nightly_master'
   ];
 
   if (!navigator.serviceWorker.controller) {
     var count = kCacheFiles.length;
-    for (var i = 0; i < kCacheFiles.length; i++) {
+    var cacheFile = function(i) {
       var name = kCacheFiles[i];
 
       var xhr = new XMLHttpRequest();
@@ -74,10 +79,13 @@ window.addEventListener('load', function() {
                 location = location;
               });
             })
+          } else {
+            cacheFile(i+1);
           }
         });
       }).bind(xhr, name);
     }
+    cacheFile(0);
   } else {
     setTimeout(function() {
       document.getElementById('content').src =

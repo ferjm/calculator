@@ -71,6 +71,9 @@ worker.onfetch = function(e) {
 
   e.respondWith(
     cachesAPI.match(e.request.url).then(function(response) {
+      if (!response) {
+        debug('going do to a fetch for for ' + e.request.url + ', might go bad\n');
+      }
       return response || fetch(e.request);
     })
   )
