@@ -69,12 +69,24 @@ function AppCache() {
   function saveFileContent(filename) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', filename, true);
+
+    var isImage = isImageFormat(filename);
+    if (isImage) {
+      xhr.responseType = 'blob';
+    }
+
     xhr.send();
 
     xhr.onload = function() {
       var key = location.protocol + '//' + location.host + filename;
-      saveIntoDatabase(key, this.responseText);
+      saveIntoDatabase(key, this.response);
     };
+  }
+
+  function isImageFormat(key) {
+    return ['png'].some(function isImageFormat(extension) {
+      return key.endsWith('.' + extension);
+    });
   }
 
   var resolveCallback, rejectCallback;

@@ -62,6 +62,8 @@ function getContentType(filename) {
     return 'image/png';
   } else if (filename.endsWith('.html')) {
     return 'text/html';
+  } else if (filename.endsWith('.png')) {
+    return 'image/png';
   }
 
   return 'text/plain';

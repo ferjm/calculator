@@ -221,9 +221,9 @@ Protocol.prototype.sendMessage = function(json) {
   }
 
   if (this.target.navigator) {
-    postMessage(JSON.stringify(json));
+    postMessage(json);
   } else {
-    this.target.postMessage(JSON.stringify(json));
+    this.target.postMessage(json);
   }
 
   if (json.method) {
@@ -244,7 +244,7 @@ Protocol.prototype.sendMessage = function(json) {
 };
 
 Protocol.prototype.recvMessage = function(msg) {
-  var json = JSON.parse(msg.data);
+  var json = msg.data;
 
   if (!'tag' in json) {
     throw new Error('Message does not have a tag');
