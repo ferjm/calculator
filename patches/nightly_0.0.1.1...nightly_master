@@ -54,10 +54,11 @@ index efe4ddb..21ba293 100644
    window.removeEventListener('load', load);
    Calculator.init();
 +  document.getElementById('phone').onclick = function() {
++    var value = Calculator.currentInput || Calculator.result.toString();
 +    if ('mozTelephony' in navigator) {
-+      navigator.mozTelephony.dial(Calculator.currentInput);
++      navigator.mozTelephony.dial(value);
 +    } else {
-+      alert(Calculator.currentInput);
++      alert(value);
 +    }
 +  };
  });

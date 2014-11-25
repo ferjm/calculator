@@ -30,7 +30,7 @@ index 2bca312..27d4a10 100644
  #display {
    color: white;
 -  background-color: #f97c17;
-+  background-color: pink;
++  background-color: #f06;
    height: 15.6rem;
    line-height: 15.6rem;
    width: 32rem;
