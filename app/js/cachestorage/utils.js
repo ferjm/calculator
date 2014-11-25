@@ -14,6 +14,16 @@ function AppCache() {
     '/calculator/app/style/images/icon_divide.png',
     '/calculator/app/style/images/icon_minus.png',
     '/calculator/app/style/images/icon_multiply.png',
+    '/calculator/app/style/images/icon_plus@1.5x.png',
+    '/calculator/app/style/images/icon_equal@1.5x.png',
+    '/calculator/app/style/images/icon_divide@1.5x.png',
+    '/calculator/app/style/images/icon_minus@1.5x.png',
+    '/calculator/app/style/images/icon_multiply@1.5x.png',
+    '/calculator/app/style/images/icon_plus@2x.png',
+    '/calculator/app/style/images/icon_equal@2.png',
+    '/calculator/app/style/images/icon_divide@2.png',
+    '/calculator/app/style/images/icon_minus@2.png',
+    '/calculator/app/style/images/icon_multiply@2.png',
 
     // config
     '/calculator/app/config.json',
