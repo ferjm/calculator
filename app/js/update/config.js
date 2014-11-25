@@ -28,7 +28,7 @@ var Config = {
         var updateHeaders = json.update.headers;
 
         resolve({
-          'url': updateUrl,
+          'url': updateUrl + '?' + Date.now(),
           'headers': updateHeaders
         });
       };

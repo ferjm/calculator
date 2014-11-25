@@ -58,12 +58,7 @@ function AppCache() {
     '/calculator/app/js/protocols/cachestorage/child.js',
     '/calculator/app/js/protocols/cachestorage/parent.js',
     '/calculator/app/js/protocols/cache/child.js',
-    '/calculator/app/js/protocols/cache/parent.js',
-
-
-    // Caching those for now since fetch isn't working properly
-    '/calculator/patches/nightly_0.0.1...nightly_master',
-    '/calculator/patches/nightly_0.0.1.1...nightly_master'
+    '/calculator/app/js/protocols/cache/parent.js'
   ];
 
   function saveIntoDatabase(key, content) {
