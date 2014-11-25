@@ -59,6 +59,7 @@ var StaticResources = {
     inlineCache '/app/js/protocols/update/parent.js'
     inlineCache '/app/js/protocols/service/child.js'
     inlineCache '/app/js/protocols/service/parent.js'
+    inlineCache '/app/js/cachestorage/utils.js'
     inlineCache '/app/js/cachestorage/api.js'
     inlineCache '/app/js/cache/api.js'
     inlineCache '/app/js/service/api.js'

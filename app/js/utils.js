@@ -7,6 +7,12 @@ function debug(str) {
   }
 }
 
+function doSoftReload() {
+  // XXX It seems to be some cache issues on both chrome and Firefox.
+  // But reloading the url this way makes it works as expected.
+  setTimeout(function() { location = location; });
+}
+
 function importScripts(script) {
   if (document.querySelector('script[src="' + script + '"]')) {
     return;
