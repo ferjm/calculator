@@ -38,3 +38,7 @@ window.addEventListener('load', function() {
     }
   });
 });
+
+window.addEventListener('cacheprogress', function(e) {
+  document.getElementById('loader').value = e.detail.progress;
+});

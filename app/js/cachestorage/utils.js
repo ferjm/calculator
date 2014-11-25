@@ -61,10 +61,21 @@ function AppCache() {
     '/calculator/app/js/protocols/cache/parent.js'
   ];
 
+  var totalFileCount = kCacheFiles.length;
+  function broadcastProgress(remaining) {
+    var e = new CustomEvent('cacheprogress', {
+      detail: {
+        progress: 1 - (remaining / totalFileCount)
+      }
+    });
+    window.dispatchEvent(e);
+  }
+
   function saveIntoDatabase(key, content) {
     asyncStorage.setItem(key, content, function() {
       if (kCacheFiles.length) {
         saveFileContent(kCacheFiles.shift());
+        broadcastProgress(kCacheFiles.length);
       } else {
         promise.resolve(true);
       }
