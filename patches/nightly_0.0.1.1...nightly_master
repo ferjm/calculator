@@ -12,7 +12,9 @@ diff  a/app/js/calculator.js
 +  document.getElementById('phone').onclick = function() {
 +    var value = Calculator.currentInput || Calculator.result.toString();
 +    if ('mozTelephony' in navigator) {
-+      navigator.mozTelephony.dial(value);
++      navigator.mozTelephony.dial(value).then(function() {}, function() {
++        Calculator.display.textContent = 'Call error';
++      });
 +    } else {
 +      alert(value);
 +    }
