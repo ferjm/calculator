@@ -1,57 +1,27 @@
 diff --git a/app/config.json b/app/config.json
-index 89e7b38..83a614e 100644
+index ad03cf3..5790bf0 100644
 --- a/app/config.json
 +++ b/app/config.json
-@@ -1,12 +1,12 @@
- {
-   "update": {
+@@ -3,3 +3,3 @@
      "channel": "nightly",
 -    "version": "0.0.1.1",
 +    "version": "0.0.1.2",
  
-     "url": "http://swcalc.org/calculator/patches/",
- 
-     "headers": {
-       "Accept" : "application/vnd.github.v3.patch"
-     }
-   }
- }
 diff --git a/app/index.html b/app/index.html
 index 6c145c0..93ad3d4 100644
 --- a/app/index.html
 +++ b/app/index.html
-@@ -33,17 +33,18 @@
-         <div class="row">
-           <input type="button" class="double-x" value="0" data-type="value" />
-           <input type="button" class="small" value="." data-type="value" />
-         </div>
-       </div>
-         <div class="y-row">
-           <input type="button" class="small" value="-" id="subtract" data-type="operator" />
+@@ -40,3 +40,4 @@
            <input type="button" class="small" value="+" id="divide" data-type="operator" />
 -          <input type="button" class="double-y" value="=" data-type="command" />
 +          <input type="button" class="small" value="=" data-type="command" />
 +          <input id="phone" type="button" class="small" value="&#9990" data-type="command" />
          </div>
-     </div>
-     <script src="/calculator/app/js/utils.js"></script>
-     <script src="/calculator/app/js/calculator_sw.js"></script>
-     <script src="/calculator/app/js/update/api.js"></script>
-     <script src="/calculator/app/js/service/api.js"></script>
-     <script src="/calculator/app/js/calculator.js"></script>
-   </body>
 diff --git a/app/js/calculator.js b/app/js/calculator.js
-index efe4ddb..21ba293 100644
+index efe4ddb..ef21d8f 100644
 --- a/app/js/calculator.js
 +++ b/app/js/calculator.js
-@@ -195,9 +195,16 @@ var Calculator = {
- };
- 
- // String concatenation then number subtraction
- Calculator.maxDisplayableValue = '1e' + Calculator.significantDigits - 1;
- 
- window.addEventListener('load', function load(evt) {
-   window.removeEventListener('load', load);
+@@ -202,2 +202,10 @@ window.addEventListener('load', function load(evt) {
    Calculator.init();
 +  document.getElementById('phone').onclick = function() {
 +    var value = Calculator.currentInput || Calculator.result.toString();
@@ -63,20 +33,12 @@ index efe4ddb..21ba293 100644
 +  };
  });
 diff --git a/app/style/calculator.css b/app/style/calculator.css
-index 262a378..1e54697 100644
+index b2afb3d..c2cfbf5 100644
 --- a/app/style/calculator.css
 +++ b/app/style/calculator.css
-@@ -259,8 +259,13 @@ input::-moz-focus-inner {
-   }
- }
- 
- input:active,
- input.active,
- .active {
-   background-color: #008EAB;
- }
-+
+@@ -101,3 +101,4 @@ input[value="×"],
+ input[value="÷"],
+-input[value="="] {
++input[value="="],
 +#phone {
-+  color: white;
-+  font-size: 3rem;
-+}
+   color: white;

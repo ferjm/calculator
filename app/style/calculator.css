@@ -91,30 +91,17 @@ input[value="C"]{
   border-right: .1rem solid #191919;
 }
 
-input[value="+"]{
-  background: url(images/icon_plus.png) center no-repeat;
-  color: transparent;
-}
-
-input[value="-"]{
-  background: url(images/icon_minus.png) center no-repeat;
-  color: transparent;
-}
-
-input[value="×"]{
-  background: url(images/icon_multiply.png) center no-repeat;
-  color: transparent;
-}
-
-input[value="÷"]{
+input[value="÷"] {
   border-right: .1rem solid #191919;
-  background: url(images/icon_divide.png) center no-repeat;
-  color: transparent;
 }
 
-input[value="="]{
-  background: url(images/icon_equal.png) center no-repeat;
-  color: transparent;
+input[value="+"],
+input[value="-"],
+input[value="×"],
+input[value="÷"],
+input[value="="] {
+  color: white;
+  font-size: 3rem;
 }
 
 input::-moz-focus-inner {
@@ -212,50 +199,6 @@ input::-moz-focus-inner {
     width: calc(((100% / 3) * 2) - 0.1rem);
     height: 100%;
     line-height: 100%;
-  }
-}
-
-@media (-moz-device-pixel-ratio: 1.5){
-  input[value="+"]{
-    background: url(images/icon_plus@1.5x.png) center no-repeat;
-  }
-
-  input[value="-"]{
-    background: url(images/icon_minus@1.5x.png) center no-repeat;
-  }
-
-  input[value="×"]{
-    background: url(images/icon_multiply@1.5x.png) center no-repeat;
-  }
-
-  input[value="÷"]{
-    background: url(images/icon_divide@1.5x.png) center no-repeat;
-  }
-
-  input[value="="]{
-    background: url(images/icon_equal@1.5x.png) center no-repeat;
-  }
-}
-
-@media (-moz-device-pixel-ratio: 2){
-  input[value="+"]{
-    background: url(images/icon_plus@2x.png) center no-repeat;
-  }
-
-  input[value="-"]{
-    background: url(images/icon_minus@2x.png) center no-repeat;
-  }
-
-  input[value="×"]{
-    background: url(images/icon_multiply@2x.png) center no-repeat;
-  }
-
-  input[value="÷"]{
-    background: url(images/icon_divide@2x.png) center no-repeat;
-  }
-
-  input[value="="]{
-    background: url(images/icon_equal@2x.png) center no-repeat;
   }
 }
 
