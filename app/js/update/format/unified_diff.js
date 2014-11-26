@@ -26,7 +26,7 @@ var UnifiedDiff = {
       [/^index\s[\da-zA-Z]+\.\.[\da-zA-Z]+(\s(\d+))?$/, nop],
       [/^---\s/, nop],
       [/^\+\+\+\s/, nop],
-      [/^@@\s+\-(\d+),(\d+)\s+\+(\d+),(\d+)\s@@/, addHunk],
+      [/^@@/, addHunk],
       [/^-/, addDeletion],
       [/^\+/, addAddition],
       [/^From\s/, nop],
@@ -90,7 +90,7 @@ var UnifiedDiff = {
         return;
       }
 
-      currentPosition = line.split(' ')[2].split(',')[0].replace('-', '');
+      currentPosition = line.split(' ')[1].split(',')[0].replace('-', '');
       files[currentFilename].hunks.push(line);
     };
 

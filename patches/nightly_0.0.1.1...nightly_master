@@ -1,28 +1,14 @@
-diff --git a/app/config.json b/app/config.json
-index ad03cf3..5790bf0 100644
---- a/app/config.json
-+++ b/app/config.json
-@@ -3,3 +3,3 @@
-     "channel": "nightly",
--    "version": "0.0.1.1",
+diff  a/app/config.json
+@@ 4
+-
 +    "version": "0.0.1.2",
- 
-diff --git a/app/index.html b/app/index.html
-index 6c145c0..93ad3d4 100644
---- a/app/index.html
-+++ b/app/index.html
-@@ -40,3 +40,4 @@
-           <input type="button" class="small" value="+" id="divide" data-type="operator" />
--          <input type="button" class="double-y" value="=" data-type="command" />
+diff  a/app/index.html
+@@ 41
+-
 +          <input type="button" class="small" value="=" data-type="command" />
 +          <input id="phone" type="button" class="small" value="&#9990" data-type="command" />
-         </div>
-diff --git a/app/js/calculator.js b/app/js/calculator.js
-index efe4ddb..ef21d8f 100644
---- a/app/js/calculator.js
-+++ b/app/js/calculator.js
-@@ -202,2 +202,10 @@ window.addEventListener('load', function load(evt) {
-   Calculator.init();
+diff  a/app/js/calculator.js
+@@ 203
 +  document.getElementById('phone').onclick = function() {
 +    var value = Calculator.currentInput || Calculator.result.toString();
 +    if ('mozTelephony' in navigator) {
@@ -31,14 +17,8 @@ index efe4ddb..ef21d8f 100644
 +      alert(value);
 +    }
 +  };
- });
-diff --git a/app/style/calculator.css b/app/style/calculator.css
-index b2afb3d..c2cfbf5 100644
---- a/app/style/calculator.css
-+++ b/app/style/calculator.css
-@@ -101,3 +101,4 @@ input[value="×"],
- input[value="÷"],
--input[value="="] {
+diff  a/app/style/calculator.css
+@@ 102
+-
 +input[value="="],
 +#phone {
-   color: white;

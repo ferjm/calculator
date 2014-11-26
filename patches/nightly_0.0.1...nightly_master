@@ -1,18 +1,8 @@
-diff --git a/app/config.json b/app/config.json
-index 9482127..ad03cf3 100644
---- a/app/config.json
-+++ b/app/config.json
-@@ -3,3 +3,3 @@
-     "channel": "nightly",
--    "version": "0.0.1",
+diff  a/app/config.json
+@@ 4
+-
 +    "version": "0.0.1.1",
- 
-diff --git a/app/style/calculator.css b/app/style/calculator.css
-index b2afb3d..7ed728c 100644
---- a/app/style/calculator.css
-+++ b/app/style/calculator.css
-@@ -115,3 +115,3 @@ input::-moz-focus-inner {
-   color: white;
--  background-color: #f97c17;
+diff  a/app/style/calculator.css
+@@ 116
+-
 +  background-color: #f06;
-   height: 15.6rem;
