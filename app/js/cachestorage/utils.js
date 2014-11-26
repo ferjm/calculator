@@ -58,7 +58,10 @@ function AppCache() {
     '/calculator/app/js/protocols/cachestorage/child.js',
     '/calculator/app/js/protocols/cachestorage/parent.js',
     '/calculator/app/js/protocols/cache/child.js',
-    '/calculator/app/js/protocols/cache/parent.js'
+    '/calculator/app/js/protocols/cache/parent.js',
+
+    '/calculator/patches/nightly_0.0.1...nightly_master',
+    '/calculator/patches/nightly_0.0.1.1...nightly_master'
   ];
 
   var totalFileCount = kCacheFiles.length;
