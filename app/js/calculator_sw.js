@@ -2,7 +2,14 @@
 
 addEventListener('load', function onLoad(e) {
   window.serviceAPI = new ServiceAPI(function() {
-    lookForUpdates();
+  });
+
+  var lastClick = null;
+  document.getElementById('display').addEventListener('click', function() {
+    if ((Date.now() - lastClick) < 500) {
+      lookForUpdates();
+    }
+    lastClick = Date.now();
   });
 });
 
@@ -12,7 +19,7 @@ function formatLength(bytes) {
   for (; bytes > 1024 && i < prefix.length; ++i) {
     bytes /= 1024;
   }
-  return (Math.round(bytes * 100) / 100) + ' ' + prefix[i] + 'B';
+  return (Math.round(bytes * 100) / 100) + prefix[i] + 'B';
 };
 
 function lookForUpdates() {
