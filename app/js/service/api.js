@@ -16,17 +16,10 @@ function ServiceAPI(callback) {
         navigator.serviceWorker.current = worker;
       }
 
-      var target = {
-        addEventListener: function(type, callback) {
-          addEventListener(type, callback);
-        },
-
-        postMessage: function(msg) {
-          worker.active.postMessage(msg);
-        }
-      };
-
-      this.protocol = new IPDLProtocol(target, 'service');
+      if (navigator.serviceWorker.controller) {
+        this.protocol =
+          new IPDLProtocol(navigator.serviceWorker.controller, 'service');
+      }
 
       callback && callback();
       debug('Registered');

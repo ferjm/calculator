@@ -84,8 +84,97 @@ importScripts('/calculator/app/js/protocols/ipdl.js');
 // message is identified by a uuid.
 //
 var IPDLProtocol = function(target, name, impl) {
+  if (!target) {
+    throw new Error(name + ': |target| can\'t be ' + target);
+  }
+
   var ipdl = new IPDL(name, impl);
-  return new Protocol(target, name, ipdl);
+
+  var bridge = this.makeBridge(target, ipdl);
+  return new Protocol(bridge, name, ipdl);
+};
+
+IPDLProtocol.prototype.makeBridge = function(target, ipdl) {
+  function throwNotSupported(side, otherside) {
+    var msg = 'Creating a bridge from ' +
+              side +
+              ' to ' +
+              otherside +
+              ' is not supported.';
+    throw new Error(msg);
+  }
+
+  var bridge = {
+    addEventListener: function(type, callback) {
+      addEventListener(type, callback);
+    },
+
+    postMessage: function(msg) {
+      target.postMessage(msg);
+    }
+  };
+
+  debug('Creating a bridge from ' +
+        ipdl.side +
+        ' to ' +
+        ipdl.otherside +
+        ' for ' +
+        target);
+
+  switch (ipdl.side) {
+    case 'window':
+
+      switch (ipdl.otherside) {
+        case 'worker':
+          bridge.addEventListener = function(type, callback) {
+            target.addEventListener(type, callback);
+          };
+          break;
+
+        case 'serviceworker':
+          break;
+
+        default:
+          throwNotSupported(ipdl.side, ipdl.otherside);
+          break;
+      }
+      break;
+
+
+      case 'worker':
+        switch (ipdl.otherside) {
+          case 'window':
+            bridge.postMessage = function(msg) {
+              postMessage(msg);
+            };
+            break;
+
+          default:
+            throwNotSupported(ipdl.side, ipdl.otherside);
+            break;
+        }
+        break;
+
+      case 'serviceworker':
+        switch (ipdl.otherside) {
+          case 'window':
+            bridge.postMessage = function(msg) {
+              clients.getAll().then(function(windows) {
+                windows.forEach(function(window) {
+                  window.postMessage(msg);
+                });
+              });
+            };
+            break;
+
+          default:
+            throwNotSupported(ipdl.side, ipdl.otherside);
+            break;
+        }
+        break;
+    }
+
+  return bridge;
 };
 
 var Protocol = function(target, name, schema) {
@@ -160,11 +249,7 @@ Protocol.prototype.sendMessage = function(json) {
     throw new Error('Message does not have an uuid');
   }
 
-  if (this.target.navigator) {
-    postMessage(json);
-  } else {
-    this.target.postMessage(json);
-  }
+  this.target.postMessage(json);
 
   if (json.method) {
     var resolveCallback = null;

@@ -3,20 +3,7 @@
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function CacheAPI() {
-  var target = {
-    addEventListener: function(type, callback) {
-      addEventListener(type, callback);
-    },
-
-    postMessage: function(msg) {
-      clients.getAll().then(function(windows) {
-        windows.forEach(function(window) {
-          window.postMessage(msg);
-        });
-      });
-    }
-  };
-  this.protocol = new IPDLProtocol(target, 'cache');
+  this.protocol = new IPDLProtocol(self, 'cache');
 }
 
 CacheAPI.prototype.put = function(key, response) {

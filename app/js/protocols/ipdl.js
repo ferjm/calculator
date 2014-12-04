@@ -4,6 +4,10 @@ importScripts('/calculator/app/js/protocols/ipdl_parser.js');
 
 function IPDL(name, impl) {
   this.ast = null;
+
+  this.side = null;
+  this.otherside = null;
+
   this.emitter = null;
   this.receiver = null;
 
@@ -11,15 +15,18 @@ function IPDL(name, impl) {
 }
 
 IPDL.prototype.parse = function(name, impl) {
-  var ast = parser.parse(this._getFileContent(name))[this.getSide()];
+  this.ast = parser.parse(this._getFileContent(name));
 
-  for (var key in ast) {
+  this.side = this.getSide();
+  this.otherside = this.getOtherSide();
+
+  for (var key in this.ast[this.side]) {
     if (key.startsWith('recv') && (!impl || !(key in impl))) {
       throw new Error('Implementation mismatch: ' + key);
     }
   }
 
-  this.emitter = ast;
+  this.emitter = this.ast[this.side];
   this.receiver = impl;
 };
 
@@ -38,6 +45,12 @@ IPDL.prototype.getSide = function() {
   }
 
   return 'serviceworker';
+};
+
+IPDL.prototype.getOtherSide = function() {
+  return this.ast.sides.find(function(side) {
+    return this.side != side.name;
+  }, this).name;
 };
 
 IPDL.prototype._getFileContent = function(name) {

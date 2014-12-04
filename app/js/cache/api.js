@@ -4,6 +4,10 @@ importScripts('/calculator/app/js/async_storage.js');
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 window.addEventListener('load', function() {
+  if (!navigator.serviceWorker.controller) {
+    return;
+  }
+
   var implementation = {
     recvPut: function(promise) {
       var key = location.protocol + '//' + location.host + promise.args.key;
@@ -23,14 +27,5 @@ window.addEventListener('load', function() {
     }
   }
 
-  var target = {
-    addEventListener: function(type, callback) {
-      addEventListener(type, callback);
-    },
-
-    postMessage: function(msg) {
-      navigator.serviceWorker.controller.postMessage(msg);
-    }
-  };
-  new IPDLProtocol(target, 'cache', implementation);
+  new IPDLProtocol(navigator.serviceWorker.controller, 'cache', implementation);
 });

@@ -11,21 +11,7 @@ function CacheStorageAPI() {
     return caches;
   }
 
-  var target = {
-    addEventListener: function(type, callback) {
-      addEventListener(type, callback);
-    },
-
-    postMessage: function(msg) {
-      clients.getAll().then(function(windows) {
-        windows.forEach(function(window) {
-          window.postMessage(msg);
-        });
-      });
-    }
-  };
-
-  this.protocol = new IPDLProtocol(target, 'cacheStorage');
+  this.protocol = new IPDLProtocol(self, 'cacheStorage');
 
   this.cache = new CacheAPI();
 }

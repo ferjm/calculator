@@ -41,19 +41,5 @@ var implementation = {
   }
 };
 
-var target = {
-  addEventListener: function(type, callback) {
-    addEventListener(type, callback);
-  },
-
-  postMessage: function(msg) {
-    clients.getAll().then(function(windows) {
-      windows.forEach(function(window) {
-        window.postMessage(msg);
-      });
-    });
-  }
-};
-
-new IPDLProtocol(target, 'service', implementation);
+new IPDLProtocol(self, 'service', implementation);
 

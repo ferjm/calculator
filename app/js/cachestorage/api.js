@@ -5,30 +5,26 @@ importScripts('/calculator/app/js/cachestorage/utils.js');
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 window.addEventListener('load', function() {
-  var implementation = {
-    recvMatch: function(promise) {
-      var key = promise.args.key;
-      if (!key.startsWith('http')) {
-        key = location.protocol + '//' + location.host + promise.args.key;
-      }
 
-      debug('recvMatch: ' + key);
-      asyncStorage.getItem(key, function(value) {
-        promise.resolve(value);
-      });
+  if (navigator.serviceWorker.controller) {
+    var implementation = {
+      recvMatch: function(promise) {
+        var key = promise.args.key;
+        if (!key.startsWith('http')) {
+          key = location.protocol + '//' + location.host + promise.args.key;
+        }
+
+        debug('recvMatch: ' + key);
+        asyncStorage.getItem(key, function(value) {
+          promise.resolve(value);
+        });
+      }
     }
+
+    new IPDLProtocol(navigator.serviceWorker.controller,
+                     'cacheStorage', implementation);
   }
 
-  var target = {
-    addEventListener: function(type, callback) {
-      addEventListener(type, callback);
-    },
-
-    postMessage: function(msg) {
-      navigator.serviceWorker.controller.postMessage(msg);
-    }
-  };
-  new IPDLProtocol(target, 'cacheStorage', implementation);
 
   (new AppCache()).then(function onSuccess(shouldReload) {
     if (shouldReload) {
