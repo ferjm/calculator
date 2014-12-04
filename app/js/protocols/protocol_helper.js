@@ -23,7 +23,7 @@
 //  * window.js *
 //  *************
 //  var worker = new Worker('worker.js');
-//  var protocol = new IPDLProtocol('update', { target: worker });
+//  var protocol = new IPDLProtocol('update', worker);
 //
 //  protocol.sendCheckForUpdate().then(
 //    function success(rv) {
@@ -48,34 +48,32 @@
 //  *************
 //  * worker.js *
 //  *************
-//  var implementation = {
-//    recvCheckForUpdate: function(msg) {
-//      var xhr = new XMLHttpRequest();
-//      xhr.open('GET', kServerUrl, true);
-//      xhr.send();
-//      xhr.onload = function() {
-//        msg.resolve(this.responseText);
-//      };
+//  var protocol = new IPDLProtocol('update');
+//
+//  protocol.recvCheckForUpdate = function(msg) {
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('GET', kServerUrl, true);
+//    xhr.send();
+//    xhr.onload = function() {
+//      msg.resolve(this.responseText);
+//    };
 //    
-//      xhr.onerror = function() {
-//        msg.reject(this.status);
-//      };
-//    },
-//
-//    recvApplyUpdate: function(msg) {
-//      applyUpdate(msg.args.updateUrl).then(
-//        function success(rv) {
-//          msg.resolve(rv);
-//        },
-//
-//        function error(rv) {
-//          msg.reject(rv);
-//        }
-//      );
-//    }
+//    xhr.onerror = function() {
+//      msg.reject(this.status);
+//    };
 //  };
 //
-//  new IPDLProtocol('update', implementation);
+//  protocol.recvApplyUpdate = function(msg) {
+//    applyUpdate(msg.args.updateUrl).then(
+//      function success(rv) {
+//        msg.resolve(rv);
+//      },
+//
+//      function error(rv) {
+//        msg.reject(rv);
+//      }
+//    );
+//  };
 //  
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
@@ -83,20 +81,20 @@ importScripts('/calculator/app/js/protocols/bridge.js');
 
 // Every protocol got a name shared between the 2 end points, and every
 // message is identified by a uuid.
-var IPDLProtocol = function(name, impl) {
-  var ipdl = new IPDL(name, impl);
-  var bridge = new Bridge(ipdl, impl ? impl.target : null);
-  return new Protocol(bridge, name, ipdl);
+var IPDLProtocol = function(name, target) {
+  var ipdl = new IPDL(name);
+  var bridge = new Bridge(ipdl, target);
+  return new Protocol(name, ipdl.ast[ipdl.side], bridge);
 };
 
-var Protocol = function(target, name, schema) {
-  this.target = target;
+var Protocol = function(name, methods, bridge) {
   this.name = name;
+  this.bridge = bridge;
   this._queue = {};
 
   var self = this;
 
-  target.addEventListener('message', function(msg) {
+  bridge.addEventListener('message', function(msg) {
     var json = self.recvMessage(msg);
     if (!json) {
       return;
@@ -104,15 +102,15 @@ var Protocol = function(target, name, schema) {
 
     if ('method' in json) {
       var methodName = 'recv' + json.method;
-      if (!(methodName in schema.receiver)) {
+      if (!(methodName in methods)) {
         throw new Error('Method ' + methodName + ' does not exists');
       }
     }
 
-    schema._recv(json);
+    methods._recv(json);
   });
 
-  schema.emitter._call = function(name, args) {
+  methods._call = function(name, args) {
     return self.sendMessage({
       'uuid': generateUUID(),
       'method': name,
@@ -120,7 +118,7 @@ var Protocol = function(target, name, schema) {
     });
   };
 
-  schema._recv = function(data) {
+  methods._recv = function(data) {
     var resolveCallback = null;
     var rejectCallback = null;
     var promise = new Promise(function(resolve, reject) {
@@ -148,10 +146,10 @@ var Protocol = function(target, name, schema) {
     };
 
     promise.args = data.args;
-    schema.receiver['recv' + data.method].call(schema.receiver, promise);
+    methods['recv' + data.method].call(methods, promise);
   };
 
-  return schema.emitter;
+  return methods;
 };
 
 Protocol.prototype.sendMessage = function(json) {
@@ -161,7 +159,7 @@ Protocol.prototype.sendMessage = function(json) {
     throw new Error('Message does not have an uuid');
   }
 
-  this.target.postMessage(json);
+  this.bridge.postMessage(json);
 
   if (json.method) {
     var resolveCallback = null;

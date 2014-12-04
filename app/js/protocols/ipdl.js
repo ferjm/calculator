@@ -2,33 +2,12 @@
 
 importScripts('/calculator/app/js/protocols/ipdl_parser.js');
 
-function IPDL(name, impl) {
-  this.ast = null;
-
-  this.side = null;
-  this.otherside = null;
-
-  this.emitter = null;
-  this.receiver = null;
-
-  this.parse(name, impl);
-}
-
-IPDL.prototype.parse = function(name, impl) {
+function IPDL(name) {
   this.ast = parser.parse(this._getFileContent(name));
 
   this.side = this.getSide();
   this.otherside = this.getOtherSide();
-
-  for (var key in this.ast[this.side]) {
-    if (key.startsWith('recv') && (!impl || !(key in impl))) {
-      throw new Error('Implementation mismatch: ' + key);
-    }
-  }
-
-  this.emitter = this.ast[this.side];
-  this.receiver = impl;
-};
+}
 
 IPDL.prototype.getSide = function() {
   // XXX This is a bit weak...

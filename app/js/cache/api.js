@@ -8,24 +8,23 @@ window.addEventListener('load', function() {
     return;
   }
 
-  var implementation = {
-    recvPut: function(promise) {
-      var key = location.protocol + '//' + location.host + promise.args.key;
-      var response = promise.args.response;
+  var protocol = new IPDLProtocol('cache');
 
-      asyncStorage.setItem(key, response, function onSuccess() {
-        promise.resolve();
-      });
-    },
+  protocol.recvPut = function(promise) {
+    var key = location.protocol + '//' + location.host + promise.args.key;
+    var response = promise.args.response;
 
-    recvDelete: function(promise) {
-      var key = location.protocol + '//' + location.host + promise.args.key;
+    asyncStorage.setItem(key, response, function onSuccess() {
+      promise.resolve();
+    });
+  };
 
-      asyncStorage.removeItem(key, function onSuccess() {
-        promise.resolve();
-      });
-    }
-  }
+  protocol.recvDelete = function(promise) {
+    var key = location.protocol + '//' + location.host + promise.args.key;
 
-  new IPDLProtocol('cache', implementation);
+    asyncStorage.removeItem(key, function onSuccess() {
+      promise.resolve();
+    });
+  };
 });
+

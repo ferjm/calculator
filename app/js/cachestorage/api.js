@@ -7,21 +7,19 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 window.addEventListener('load', function() {
 
   if (navigator.serviceWorker.controller) {
-    var implementation = {
-      recvMatch: function(promise) {
-        var key = promise.args.key;
-        if (!key.startsWith('http')) {
-          key = location.protocol + '//' + location.host + promise.args.key;
-        }
+    var protocol = new IPDLProtocol('cacheStorage');
 
-        debug('recvMatch: ' + key);
-        asyncStorage.getItem(key, function(value) {
-          promise.resolve(value);
-        });
+    protocol.recvMatch = function(promise) {
+      var key = promise.args.key;
+      if (!key.startsWith('http')) {
+        key = location.protocol + '//' + location.host + promise.args.key;
       }
-    }
 
-    new IPDLProtocol('cacheStorage', implementation);
+      debug('recvMatch: ' + key);
+      asyncStorage.getItem(key, function(value) {
+        promise.resolve(value);
+      });
+    }
   }
 
 
