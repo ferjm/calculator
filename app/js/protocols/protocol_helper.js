@@ -83,6 +83,14 @@ importScripts('/calculator/app/js/protocols/ipdl.js');
 // Every protocol got a name shared between the 2 end points, and every
 // message is identified by a uuid.
 //
+// XXX there are cases where |target| is really useless,
+//     for example from serviceWorker -> window,
+//     window -> serviceWorker.
+//     Or even in the worker -> window case where there is no
+//     subworker.
+//     And so I wonder if |target| should not be an optional
+//     parameter, and so |impl| would be replace by a |config|
+//     object.
 var IPDLProtocol = function(target, name, impl) {
   if (!target) {
     throw new Error(name + ': |target| can\'t be ' + target);
