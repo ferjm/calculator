@@ -1,5 +1,6 @@
 'use strict';
 
+importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/message.js');
 
 // Every protocol got a name shared between the 2 end points, and

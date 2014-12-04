@@ -75,7 +75,6 @@
 //    );
 //  };
 //  
-importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
 importScripts('/calculator/app/js/protocols/bridge.js');
 importScripts('/calculator/app/js/protocols/protocol.js');
