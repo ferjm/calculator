@@ -10,6 +10,11 @@ var cachesAPI = new CacheStorageAPI();
 
 // lifecycle events
 worker.oninstall = function(e) {
+  e.waitUntil(
+    cachesAPI.open('calculator-cache-v4').then(function(cache) {
+      return cache.addAll(kCacheFiles);
+    })
+  );
 };
 
 

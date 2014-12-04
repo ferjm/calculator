@@ -33,3 +33,9 @@ CacheAPI.prototype.getAll = function(files) {
     resolve();
   });
 };
+
+CacheAPI.prototype.addAll = function(files) {
+  return new Promise(function(resolve, reject) {
+    return resolve();
+  });
+};

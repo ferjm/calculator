@@ -46,6 +46,7 @@ var StaticResources = {
 
   resources: {
     inlineCache '/app/cache.html'
+    inlineCache '/app/service_worker_files.js'
     inlineCache '/app/js/utils.js'
     inlineCache '/app/js/string-polyfill.js'
     inlineCache '/app/js/async_storage.js'

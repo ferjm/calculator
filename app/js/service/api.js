@@ -40,11 +40,6 @@ function ServiceAPI(callback) {
 };
 
 ServiceAPI.prototype.applyUpdate = function(updatedFiles) {
-  if (!navigator.serviceWorker.controller) {
-    debug('This page is not managed by a service worker');
-    return;
-  }
-
   return this.protocol.sendApplyUpdate(updatedFiles);
 };
 

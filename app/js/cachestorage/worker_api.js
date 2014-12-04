@@ -3,8 +3,14 @@
 importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 importScripts('/calculator/app/js/cache/worker_api.js');
+importScripts('/calculator/app/service_worker_files.js');
 
 function CacheStorageAPI() {
+  // On chrome, let's use the real cache directly.
+  if (!('Worker' in self)) {
+    return caches;
+  }
+
   var target = {
     addEventListener: function(type, callback) {
       addEventListener(type, callback);
