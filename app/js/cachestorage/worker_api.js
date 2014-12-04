@@ -11,7 +11,7 @@ function CacheStorageAPI() {
     return caches;
   }
 
-  this.protocol = new IPDLProtocol(self, 'cacheStorage');
+  this.protocol = new IPDLProtocol('cacheStorage');
 
   this.cache = new CacheAPI();
 }

@@ -91,5 +91,5 @@ var implementation = {
   }
 };
 
-new IPDLProtocol(this, 'update', implementation);
+new IPDLProtocol('update', implementation);
 

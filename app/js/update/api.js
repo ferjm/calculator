@@ -4,7 +4,7 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function UpdateAPI() {
   var worker = new Worker('/calculator/app/js/update/worker_api.js');
-  this.protocol = new IPDLProtocol(worker, 'update');
+  this.protocol = new IPDLProtocol('update', { target: worker });
 }
 
 UpdateAPI.prototype.checkForUpdate = function() {

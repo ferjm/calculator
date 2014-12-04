@@ -3,7 +3,7 @@
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function CacheAPI() {
-  this.protocol = new IPDLProtocol(self, 'cache');
+  this.protocol = new IPDLProtocol('cache');
 }
 
 CacheAPI.prototype.put = function(key, response) {

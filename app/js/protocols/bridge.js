@@ -1,6 +1,6 @@
 'use strict';
 
-function Bridge(target, ipdl) {
+function Bridge(ipdl, target) {
   debug('Creating a bridge from ' +
         ipdl.side +
         ' to ' +
@@ -71,7 +71,7 @@ function BridgeWindowToServiceWorker(target) {
     throw new Error(msg);
   }
 
-  this.target = target;
+  this.target = target || navigator.serviceWorker.controller;
 }
 
 BridgeWindowToServiceWorker.prototype.addEventListener = function(type, cb) {

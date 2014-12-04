@@ -41,5 +41,5 @@ var implementation = {
   }
 };
 
-new IPDLProtocol(self, 'service', implementation);
+new IPDLProtocol('service', implementation);
 

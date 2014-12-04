@@ -1,6 +1,6 @@
 'use strict';
 
-// ProtocolHelper is designed to create a point-to-point communication
+// IPDLProtocol is designed to create a point-to-point communication
 // mechanism.
 // This communication can happens between 2 windows, 2 workers, or a
 // window and worker.
@@ -23,7 +23,7 @@
 //  * window.js *
 //  *************
 //  var worker = new Worker('worker.js');
-//  var protocol = ProtocolHelper.newProtocol(worker, 'update');
+//  var protocol = new IPDLProtocol('update', { target: worker });
 //
 //  protocol.sendCheckForUpdate().then(
 //    function success(rv) {
@@ -75,7 +75,7 @@
 //    }
 //  };
 //
-//  ProtocolHelper.newProtocol(self, 'update', implementation);
+//  new IPDLProtocol('update', implementation);
 //  
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
@@ -83,19 +83,9 @@ importScripts('/calculator/app/js/protocols/bridge.js');
 
 // Every protocol got a name shared between the 2 end points, and every
 // message is identified by a uuid.
-//
-// XXX there are cases where |target| is really useless,
-//     for example from serviceWorker -> window,
-//     window -> serviceWorker.
-//     Or even in the worker -> window case where there is no
-//     subworker.
-//     And so I wonder if |target| should not be an optional
-//     parameter, and so |impl| would be replace by a |config|
-//     object.
-var IPDLProtocol = function(target, name, impl) {
-
+var IPDLProtocol = function(name, impl) {
   var ipdl = new IPDL(name, impl);
-  var bridge = new Bridge(target, ipdl);
+  var bridge = new Bridge(ipdl, impl ? impl.target : null);
   return new Protocol(bridge, name, ipdl);
 };
 

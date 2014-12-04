@@ -27,5 +27,5 @@ window.addEventListener('load', function() {
     }
   }
 
-  new IPDLProtocol(navigator.serviceWorker.controller, 'cache', implementation);
+  new IPDLProtocol('cache', implementation);
 });

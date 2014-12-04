@@ -18,7 +18,7 @@ function ServiceAPI(callback) {
 
       if (navigator.serviceWorker.controller) {
         this.protocol =
-          new IPDLProtocol(navigator.serviceWorker.controller, 'service');
+          new IPDLProtocol('service');
       }
 
       callback && callback();

@@ -21,8 +21,7 @@ window.addEventListener('load', function() {
       }
     }
 
-    new IPDLProtocol(navigator.serviceWorker.controller,
-                     'cacheStorage', implementation);
+    new IPDLProtocol('cacheStorage', implementation);
   }
 
 
