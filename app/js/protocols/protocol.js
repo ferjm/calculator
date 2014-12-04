@@ -2,6 +2,7 @@
 
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/message.js');
+importScripts('/calculator/app/js/protocols/store.js');
 
 // Every protocol got a name shared between the 2 end points, and
 // every message is identified by a uuid.
@@ -9,8 +10,7 @@ var Protocol = function(name, methods, bridge) {
   this.name = name;
   this.methods = methods;
   this.bridge = bridge;
-
-  this._queue = {};
+  this.store = new PromiseStore();
 
   methods._call = this.sendMethodCall.bind(this);
   bridge.recvMessage = this.recvMethodCall.bind(this);
@@ -62,22 +62,11 @@ Protocol.prototype.sendMessage = function(json) {
   this.bridge.postMessage(json);
 
   if (json.method) {
-    var resolveCallback = null;
-    var rejectCallback = null;
-    var promise = new Promise(function(resolve, reject) {
-      resolveCallback = resolve;
-      rejectCallback = reject;
-    });
-    promise.resolve = resolveCallback;
-    promise.reject = rejectCallback;
-
-    this._queue[json.uuid] = promise;
-    return promise;
+    return this.store.new(json.uuid);
   }
 
   return null;
 };
-
 
 Protocol.prototype.recvMessage = function(msg) {
   var json = msg.data;
@@ -95,15 +84,8 @@ Protocol.prototype.recvMessage = function(msg) {
   }
 
   var uuid = json.uuid;
-  if (this._queue[uuid]) {
-    var promise = this._queue[uuid];
-    if (json.success) {
-      promise.resolve(json.rv);
-    } else {
-      promise.reject(json.rv);
-    }
-
-    delete this._queue[uuid];
+  if (this.store.has(uuid)) {
+    this.store.resolve(uuid, json.success, json.rv);
     return null;
   }
 

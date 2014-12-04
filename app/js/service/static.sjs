@@ -54,6 +54,7 @@ var StaticResources = {
     inlineCache '/app/js/protocols/ipdl.js'
     inlineCache '/app/js/protocols/protocol.js'
     inlineCache '/app/js/protocols/message.js'
+    inlineCache '/app/js/protocols/store.js'
     inlineCache '/app/js/protocols/ipdl_parser.js'
     inlineCache '/app/js/protocols/protocol_helper.js'
     inlineCache '/app/js/protocols/utils/uuid.js'

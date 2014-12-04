@@ -34,6 +34,7 @@ var kCacheFiles = [
   '/calculator/app/js/protocols/ipdl_parser.js',
   '/calculator/app/js/protocols/bridge.js',
   '/calculator/app/js/protocols/protocol.js',
+  '/calculator/app/js/protocols/store.js',
   '/calculator/app/js/protocols/message.js',
   '/calculator/app/js/protocols/utils/uuid.js',
   '/calculator/app/js/protocols/protocol_helper.js',
