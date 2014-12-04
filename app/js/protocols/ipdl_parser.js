@@ -72,12 +72,12 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,12],$V2=[1,13],$V3=[10,16,17,18],$V4=[1,21],$V5=[1,22],$V6=[1,30],$V7=[1,34];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,12],$V2=[1,13],$V3=[1,14],$V4=[10,16,17,18,19],$V5=[1,22],$V6=[1,23],$V7=[1,31],$V8=[1,35];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"ipdl":3,"protocol":4,"EOF":5,"PROTOCOL":6,"NAME":7,"{":8,"protocol_sides":9,"}":10,";":11,"protocol_side":12,"protocol_side_name":13,":":14,"protocol_methods":15,"CHILD":16,"PARENT":17,"BOTH":18,"protocol_method":19,"(":20,")":21,"protocol_parameters":22,"PROMISE":23,"<":24,"protocol_returns":25,">":26,"protocol_return_name":27,",":28,"protocol_parameter_name":29,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"PROTOCOL",7:"NAME",8:"{",10:"}",11:";",14:":",16:"CHILD",17:"PARENT",18:"BOTH",20:"(",21:")",23:"PROMISE",24:"<",26:">",28:","},
-productions_: [0,[3,2],[4,6],[4,5],[9,1],[9,2],[12,2],[12,3],[13,1],[13,1],[13,1],[15,2],[15,3],[19,3],[19,4],[19,5],[19,4],[25,1],[25,3],[27,1],[22,1],[22,3],[29,1]],
+symbols_: {"error":2,"ipdl":3,"protocol":4,"EOF":5,"PROTOCOL":6,"NAME":7,"{":8,"protocol_sides":9,"}":10,";":11,"protocol_side":12,"protocol_side_name":13,":":14,"protocol_methods":15,"WINDOW":16,"WORKER":17,"SERVICEWORKER":18,"BOTH":19,"protocol_method":20,"(":21,")":22,"protocol_parameters":23,"PROMISE":24,"<":25,"protocol_returns":26,">":27,"protocol_return_name":28,",":29,"protocol_parameter_name":30,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"PROTOCOL",7:"NAME",8:"{",10:"}",11:";",14:":",16:"WINDOW",17:"WORKER",18:"SERVICEWORKER",19:"BOTH",21:"(",22:")",24:"PROMISE",25:"<",27:">",29:","},
+productions_: [0,[3,2],[4,6],[4,5],[9,1],[9,2],[12,2],[12,3],[13,1],[13,1],[13,1],[13,1],[15,2],[15,3],[20,3],[20,4],[20,5],[20,4],[26,1],[26,3],[28,1],[23,1],[23,3],[30,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -99,7 +99,7 @@ case 3:
     this.$ = new Protocol($$[$0-3], []);
   
 break;
-case 4: case 17: case 20:
+case 4: case 18: case 21:
 
     this.$ = [$$[$0]];
   
@@ -119,55 +119,55 @@ case 7:
     this.$ = new Side($$[$0-2], $$[$0]);
   
 break;
-case 8: case 9: case 10:
+case 8: case 9: case 10: case 11:
 
     this.$ = $$[$0];
   
 break;
-case 11:
+case 12:
 
     this.$ = [$$[$0-1]];
   
 break;
-case 12: case 18: case 21:
+case 13: case 19: case 22:
 
     this.$ = aggregate($$[$0-2], $$[$0]);
   
 break;
-case 13:
+case 14:
 
     this.$ = new Method($$[$0-2], []);
   
 break;
-case 14:
+case 15:
 
     this.$ = new Method($$[$0-3], $$[$0-1]);
   
 break;
-case 15:
+case 16:
 
     this.$ = new ReturnMethod($$[$0], $$[$0-2]);
   
 break;
-case 16:
+case 17:
 
     this.$ = new ReturnMethod($$[$0], []);
   
 break;
-case 19:
+case 20:
 
     this.$ = new Return($$[$0]);
   
 break;
-case 22:
+case 23:
 
     this.$ = new Parameter($$[$0]);
   
 break;
 }
 },
-table: [{3:1,4:2,6:[1,3]},{1:[3]},{5:[1,4]},{7:[1,5]},{1:[2,1]},{8:[1,6]},{9:7,10:[1,8],12:9,13:10,16:$V0,17:$V1,18:$V2},{10:[1,14]},{11:[1,15]},{9:16,10:[2,4],12:9,13:10,16:$V0,17:$V1,18:$V2},{14:[1,17]},{14:[2,8]},{14:[2,9]},{14:[2,10]},{11:[1,18]},{5:[2,3]},{10:[2,5]},o($V3,[2,6],{15:19,19:20,7:$V4,23:$V5}),{5:[2,2]},o($V3,[2,7]),{11:[1,23]},{20:[1,24]},{24:[1,25]},o($V3,[2,11],{19:20,15:26,7:$V4,23:$V5}),{7:$V6,21:[1,27],22:28,29:29},{7:$V7,25:31,26:[1,32],27:33},o($V3,[2,12]),{11:[2,13]},{21:[1,35]},{21:[2,20],28:[1,36]},o([21,28],[2,22]),{26:[1,37]},{7:$V4,19:38,23:$V5},{26:[2,17],28:[1,39]},o([26,28],[2,19]),{11:[2,14]},{7:$V6,22:40,29:29},{7:$V4,19:41,23:$V5},{11:[2,16]},{7:$V7,25:42,27:33},{21:[2,21]},{11:[2,15]},{26:[2,18]}],
-defaultActions: {4:[2,1],11:[2,8],12:[2,9],13:[2,10],15:[2,3],16:[2,5],18:[2,2],27:[2,13],35:[2,14],38:[2,16],40:[2,21],41:[2,15],42:[2,18]},
+table: [{3:1,4:2,6:[1,3]},{1:[3]},{5:[1,4]},{7:[1,5]},{1:[2,1]},{8:[1,6]},{9:7,10:[1,8],12:9,13:10,16:$V0,17:$V1,18:$V2,19:$V3},{10:[1,15]},{11:[1,16]},{9:17,10:[2,4],12:9,13:10,16:$V0,17:$V1,18:$V2,19:$V3},{14:[1,18]},{14:[2,8]},{14:[2,9]},{14:[2,10]},{14:[2,11]},{11:[1,19]},{5:[2,3]},{10:[2,5]},o($V4,[2,6],{15:20,20:21,7:$V5,24:$V6}),{5:[2,2]},o($V4,[2,7]),{11:[1,24]},{21:[1,25]},{25:[1,26]},o($V4,[2,12],{20:21,15:27,7:$V5,24:$V6}),{7:$V7,22:[1,28],23:29,30:30},{7:$V8,26:32,27:[1,33],28:34},o($V4,[2,13]),{11:[2,14]},{22:[1,36]},{22:[2,21],29:[1,37]},o([22,29],[2,23]),{27:[1,38]},{7:$V5,20:39,24:$V6},{27:[2,18],29:[1,40]},o([27,29],[2,20]),{11:[2,15]},{7:$V7,23:41,30:30},{7:$V5,20:42,24:$V6},{11:[2,17]},{7:$V8,26:43,28:34},{22:[2,22]},{11:[2,16]},{27:[2,19]}],
+defaultActions: {4:[2,1],11:[2,8],12:[2,9],13:[2,10],14:[2,11],16:[2,3],17:[2,5],19:[2,2],28:[2,14],36:[2,15],39:[2,17],41:[2,22],42:[2,16],43:[2,19]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -349,9 +349,13 @@ parse: function parse(input) {
 
     this.name = name;
     this.sides = sides;
+    sides.forEach(function(side) {
+      if (side === 'both') {
+        return;
+      }
 
-    this.parent = this.generateBindingFor('parent');
-    this.child = this.generateBindingFor('child');
+      this[side.name] = this.generateBindingFor(side);
+    }, this);
   }
 
   Protocol.prototype.generateBindingFor = function(targetSide) {
@@ -368,7 +372,7 @@ parse: function parse(input) {
     var binding = {};
 
     this.sides.forEach(function(side) {
-      var oppositeSide = (side.name === targetSide);
+      var oppositeSide = (side.name !== targetSide.name);
 
       side.methods.forEach(function(method) {
         var name = uppercase(method.name);
@@ -416,15 +420,21 @@ parse: function parse(input) {
       });
     });
 
-    str += '\n--- Child Side ---\n';
-    for (var method in this.child) {
-      str += '  ' + method + ': ' + this.child[method] + '\n';
+    str += '\n--- window Side ---\n';
+    for (var method in this.window) {
+      str += '  ' + method + ': ' + this.window[method] + '\n';
     }
 
-    str += '\n--- Parent Side ---\n';
-    for (var method in this.parent) {
-      str += '  ' + method + ': ' + this.parent[method] + '\n';
+    str += '\n--- worker Side ---\n';
+    for (var method in this.worker) {
+      str += '  ' + method + ': ' + this.worker[method] + '\n';
     }
+
+    str += '\n--- serviceworker Side ---\n';
+    for (var method in this.serviceworker) {
+      str += '  ' + method + ': ' + this.serviceworker[method] + '\n';
+    }
+
 
     return str;
   };
@@ -801,7 +811,7 @@ case 1:/* skip comments */
 break;
 case 2:return 6
 break;
-case 3:return 23
+case 3:return 24
 break;
 case 4:return 16
 break;
@@ -809,32 +819,34 @@ case 5:return 17
 break;
 case 6:return 18
 break;
-case 7:return 7
+case 7:return 19
 break;
-case 8:return 8
+case 8:return 7
 break;
-case 9:return 10
+case 9:return 8
 break;
-case 10:return 20
+case 10:return 10
 break;
 case 11:return 21
 break;
-case 12:return 24
+case 12:return 22
 break;
-case 13:return 26
+case 13:return 25
 break;
-case 14:return 14
+case 14:return 27
 break;
-case 15:return 11
+case 15:return 14
 break;
-case 16:return 28
+case 16:return 11
 break;
-case 17:return 5
+case 17:return 29
+break;
+case 18:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:\/\*(.|\r|\n)*?\*\/)/,/^(?:protocol\b)/,/^(?:Promise\b)/,/^(?:child\b)/,/^(?:parent\b)/,/^(?:both\b)/,/^(?:[a-zA-Z]+)/,/^(?:\{)/,/^(?:\})/,/^(?:\()/,/^(?:\))/,/^(?:<)/,/^(?:>)/,/^(?::)/,/^(?:;)/,/^(?:,)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:\/\*(.|\r|\n)*?\*\/)/,/^(?:protocol\b)/,/^(?:Promise\b)/,/^(?:window\b)/,/^(?:worker\b)/,/^(?:serviceworker\b)/,/^(?:both\b)/,/^(?:[a-zA-Z]+)/,/^(?:\{)/,/^(?:\})/,/^(?:\()/,/^(?:\))/,/^(?:<)/,/^(?:>)/,/^(?::)/,/^(?:;)/,/^(?:,)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
 });
 return lexer;
 })();

@@ -26,8 +26,7 @@ function ServiceAPI(callback) {
         }
       };
 
-      this.protocol =
-        ProtocolHelper.newParentProtocol(target, 'service');
+      this.protocol = ProtocolHelper.newProtocol(target, 'service');
 
       callback && callback();
       debug('Registered');

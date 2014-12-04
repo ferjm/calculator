@@ -16,8 +16,7 @@ function CacheAPI() {
       });
     }
   };
-  this.protocol =
-    ProtocolHelper.newParentProtocol(target, 'cache');
+  this.protocol = ProtocolHelper.newProtocol(target, 'cache');
 }
 
 CacheAPI.prototype.put = function(key, response) {

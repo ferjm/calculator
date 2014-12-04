@@ -55,5 +55,5 @@ var target = {
   }
 };
 
-ProtocolHelper.newChildProtocol(target, 'service', implementation);
+ProtocolHelper.newProtocol(target, 'service', implementation);
 

@@ -136,15 +136,8 @@ var ProtocolHelper = {
 // The protocol API is passed via |impl|, so the 2 sides of the protocol
 // can implement different APIs.
 //
-// Ideally the protocols would be defined using something known, such
-// as IPDL: https://developer.mozilla.org/en-US/docs/IPDL/Tutorial
-ProtocolHelper.newParentProtocol = function(target, name, impl) {
-  var ipdl = new ParentIPDL(name, impl);
-  return new Protocol(target, name, ipdl);
-};
-
-ProtocolHelper.newChildProtocol = function(target, name, impl) {
-  var ipdl = new ChildIPDL(name, impl);
+ProtocolHelper.newProtocol = function(target, name, impl) {
+  var ipdl = new IPDL(name, impl);
   return new Protocol(target, name, ipdl);
 };
 

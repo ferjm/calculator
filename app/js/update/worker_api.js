@@ -4,6 +4,13 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 importScripts('/calculator/app/js/update/utils.js');
 importScripts('/calculator/app/js/update/config.js');
 
+function debug(str) {
+  console.log('Worker: ' + str);
+  if ('dump' in self) {
+    dump('Worker: ' + str + '\n');
+  }
+}
+
 var implementation = {
   recvCheckForUpdate: function(promise) {
     var self = this;
@@ -84,5 +91,5 @@ var implementation = {
   }
 };
 
-ProtocolHelper.newChildProtocol(this, 'update', implementation);
+ProtocolHelper.newProtocol(this, 'update', implementation);
 

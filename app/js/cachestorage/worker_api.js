@@ -25,8 +25,7 @@ function CacheStorageAPI() {
     }
   };
 
-  this.protocol =
-    ProtocolHelper.newParentProtocol(target, 'cacheStorage');
+  this.protocol = ProtocolHelper.newProtocol(target, 'cacheStorage');
 
   this.cache = new CacheAPI();
 }

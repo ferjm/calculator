@@ -1,9 +1,9 @@
 
 protocol PUpdate
 {
-  child:
+  worker:
     CheckForUpdate();
     ApplyUpdate(updateUrl);
 
-  parent:
+  window:
 };

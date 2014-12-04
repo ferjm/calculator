@@ -1,6 +1,8 @@
 
 protocol PService
 {
-  child:
+  serviceworker:
     ApplyUpdate(updatedFiles);
+
+  window:
 };

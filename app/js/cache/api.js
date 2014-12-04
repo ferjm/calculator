@@ -32,5 +32,5 @@ window.addEventListener('load', function() {
       navigator.serviceWorker.controller.postMessage(msg);
     }
   };
-  ProtocolHelper.newChildProtocol(target, 'cache', implementation);
+  ProtocolHelper.newProtocol(target, 'cache', implementation);
 });

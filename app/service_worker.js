@@ -20,7 +20,7 @@ worker.oninstall = function(e) {
 
 // network events
 worker.onfetch = function(e) {
-  debug(e.type + ': ' + e.request.url);
+  //debug(e.type + ': ' + e.request.url);
   if (StaticResources.handle(e)) {
     return;
   }
