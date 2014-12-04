@@ -28,7 +28,7 @@ window.addEventListener('load', function() {
       navigator.serviceWorker.controller.postMessage(msg);
     }
   };
-  ProtocolHelper.newProtocol(target, 'cacheStorage', implementation);
+  new IPDLProtocol(target, 'cacheStorage', implementation);
 
   (new AppCache()).then(function onSuccess(shouldReload) {
     if (shouldReload) {

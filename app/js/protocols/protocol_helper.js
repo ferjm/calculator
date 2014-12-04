@@ -80,20 +80,10 @@
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
 
-var ProtocolHelper = {
-};
-
 // Every protocol got a name shared between the 2 end points, and every
 // message is identified by a uuid.
-// A uuid is used instead of a simple id that is incremented mostly
-// because this code is designed to live into a ServiceWorker which
-// can be killed at any time, and results into ids beeing resetted.
 //
-// Every protocol is defined at runtime and then marked as frozen.
-// The protocol API is passed via |impl|, so the 2 sides of the protocol
-// can implement different APIs.
-//
-ProtocolHelper.newProtocol = function(target, name, impl) {
+var IPDLProtocol = function(target, name, impl) {
   var ipdl = new IPDL(name, impl);
   return new Protocol(target, name, ipdl);
 };

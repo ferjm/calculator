@@ -16,7 +16,7 @@ function CacheAPI() {
       });
     }
   };
-  this.protocol = ProtocolHelper.newProtocol(target, 'cache');
+  this.protocol = new IPDLProtocol(target, 'cache');
 }
 
 CacheAPI.prototype.put = function(key, response) {

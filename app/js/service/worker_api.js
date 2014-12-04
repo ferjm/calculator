@@ -55,5 +55,5 @@ var target = {
   }
 };
 
-ProtocolHelper.newProtocol(target, 'service', implementation);
+new IPDLProtocol(target, 'service', implementation);
 

@@ -26,7 +26,7 @@ function ServiceAPI(callback) {
         }
       };
 
-      this.protocol = ProtocolHelper.newProtocol(target, 'service');
+      this.protocol = new IPDLProtocol(target, 'service');
 
       callback && callback();
       debug('Registered');

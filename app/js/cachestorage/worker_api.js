@@ -25,7 +25,7 @@ function CacheStorageAPI() {
     }
   };
 
-  this.protocol = ProtocolHelper.newProtocol(target, 'cacheStorage');
+  this.protocol = new IPDLProtocol(target, 'cacheStorage');
 
   this.cache = new CacheAPI();
 }

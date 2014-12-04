@@ -32,5 +32,5 @@ window.addEventListener('load', function() {
       navigator.serviceWorker.controller.postMessage(msg);
     }
   };
-  ProtocolHelper.newProtocol(target, 'cache', implementation);
+  new IPDLProtocol(target, 'cache', implementation);
 });
