@@ -31,17 +31,13 @@ var kCacheFiles = [
 
   // protocols
   '/calculator/app/js/protocols/ipdl.js',
-  '/calculator/app/js/protocols/utils/lexer.js',
+  '/calculator/app/js/protocols/ipdl_parser.js',
   '/calculator/app/js/protocols/utils/uuid.js',
   '/calculator/app/js/protocols/protocol_helper.js',
-  '/calculator/app/js/protocols/update/child.js',
-  '/calculator/app/js/protocols/update/parent.js',
-  '/calculator/app/js/protocols/service/child.js',
-  '/calculator/app/js/protocols/service/parent.js',
-  '/calculator/app/js/protocols/cachestorage/child.js',
-  '/calculator/app/js/protocols/cachestorage/parent.js',
-  '/calculator/app/js/protocols/cache/child.js',
-  '/calculator/app/js/protocols/cache/parent.js',
+  '/calculator/app/js/protocols/ipdl/PUpdate.ipdl',
+  '/calculator/app/js/protocols/ipdl/PService.ipdl',
+  '/calculator/app/js/protocols/ipdl/PCache.ipdl',
+  '/calculator/app/js/protocols/ipdl/PCacheStorage.ipdl',
 
   '/calculator/patches/nightly_0.0.1...nightly_master',
   '/calculator/patches/nightly_0.0.1.1...nightly_master'
