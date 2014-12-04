@@ -12,61 +12,18 @@
 //  ****************
 //  protocol PUpdate
 //  {
-//    child:
+//    worker:
 //      CheckForUpdate();
 //      ApplyUpdate(updateUrl);
 //
-//    parent:
-//  };
-//
-//  *******************************************
-//  * PUpdateParent.js (virtual file)         *
-//  *******************************************
-//
-//  var PUpdate = {
-//    'child': {
-//      sendCheckForUpdate: function() {
-//        return this._call(
-//          'CheckForUpdate'
-//        );
-//      },
-//
-//      sendApplyUpdate: function(updateUrl) {
-//        return this._call(
-//          'ApplyUpdate',
-//          {
-//            'updateUrl': updateUrl
-//          }
-//        );
-//      }
-//    },
-//
-//    'parent': {
-//    }
-//  };
-//
-//  *******************************************
-//  * PUpdateChild.js (virtual file)          *
-//  *******************************************
-//
-//  var PUpdate = {
-//    'child': {
-//      recvCheckForUpdate: function(/* Promise */ promise) {
-//      },
-//
-//      recvApplyUpdate: function(/* Promise */ promise) {
-//      }
-//    },
-//
-//    'parent': {
-//    }
+//    window:
 //  };
 //
 //  *************
-//  * parent.js *
+//  * window.js *
 //  *************
-//  var worker = new Worker('child.js');
-//  var protocol = ProtocolHelper.newParentProtocol(worker, 'update');
+//  var worker = new Worker('worker.js');
+//  var protocol = ProtocolHelper.newProtocol(worker, 'update');
 //
 //  protocol.sendCheckForUpdate().then(
 //    function success(rv) {
@@ -89,7 +46,7 @@
 //  );
 //
 //  *************
-//  * child.js *
+//  * worker.js *
 //  *************
 //  var implementation = {
 //    recvCheckForUpdate: function(msg) {
@@ -118,7 +75,7 @@
 //    }
 //  };
 //
-//  ProtocolHelper.newChildProtocol(self, 'update', implementation);
+//  ProtocolHelper.newProtocol(self, 'update', implementation);
 //  
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
