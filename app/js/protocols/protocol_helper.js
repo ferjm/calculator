@@ -94,7 +94,7 @@ var Protocol = function(name, methods, bridge) {
 
   var self = this;
 
-  bridge.addEventListener('message', function(msg) {
+  bridge.recvMessage = function(msg) {
     var json = self.recvMessage(msg);
     if (!json) {
       return;
@@ -108,7 +108,7 @@ var Protocol = function(name, methods, bridge) {
     }
 
     methods._recv(json);
-  });
+  };
 
   methods._call = function(name, args) {
     return self.sendMessage({

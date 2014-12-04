@@ -49,10 +49,13 @@ function BridgeWindowToWorker(target) {
   }
 
   this.target = target;
+  target.addEventListener('message', this);
 }
 
-BridgeWindowToWorker.prototype.addEventListener = function(type, cb) {
-  this.target.addEventListener(type, cb);
+BridgeWindowToWorker.prototype.handleEvent = function(e) {
+  if ('recvMessage' in this) {
+    this.recvMessage(e);
+  }
 };
 
 BridgeWindowToWorker.prototype.postMessage = function(msg) {
@@ -72,10 +75,13 @@ function BridgeWindowToServiceWorker(target) {
   }
 
   this.target = target || navigator.serviceWorker.controller;
+  addEventListener('message', this);
 }
 
-BridgeWindowToServiceWorker.prototype.addEventListener = function(type, cb) {
-  addEventListener(type, cb);
+BridgeWindowToServiceWorker.prototype.handleEvent = function(e) {
+  if ('recvMessage' in this) {
+    this.recvMessage(e);
+  }
 };
 
 BridgeWindowToServiceWorker.prototype.postMessage = function(msg) {
@@ -88,10 +94,13 @@ BridgeWindowToServiceWorker.prototype.postMessage = function(msg) {
  */
 function BridgeWorkerToWindow(target) {
   this.target = target;
+  addEventListener('message', this);
 }
 
-BridgeWorkerToWindow.prototype.addEventListener = function(type, cb) {
-  addEventListener(type, cb);
+BridgeWorkerToWindow.prototype.handleEvent = function(e) {
+  if ('recvMessage' in this) {
+    this.recvMessage(e);
+  }
 };
 
 BridgeWorkerToWindow.prototype.postMessage = function(msg) {
@@ -103,10 +112,13 @@ BridgeWorkerToWindow.prototype.postMessage = function(msg) {
  */
 function BridgeServiceWorkerToWindow(target) {
   this.target = target;
+  addEventListener('message', this);
 }
 
-BridgeServiceWorkerToWindow.prototype.addEventListener = function(type, cb) {
-  addEventListener(type, cb);
+BridgeServiceWorkerToWindow.prototype.handleEvent = function(e) {
+  if ('recvMessage' in this) {
+    this.recvMessage(e);
+  }
 };
 
 BridgeServiceWorkerToWindow.prototype.postMessage = function(msg) {
