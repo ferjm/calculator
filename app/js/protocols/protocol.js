@@ -1,13 +1,11 @@
 'use strict';
 
-importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/message.js');
 importScripts('/calculator/app/js/protocols/store.js');
 
-// Every protocol got a name shared between the 2 end points, and
-// every message is identified by a uuid.
 var Protocol = function(name, methods, bridge) {
-  this.name = name;
+  this.tag = name;
+
   this.methods = methods;
   this.bridge = bridge;
   this.store = new PromiseStore();
@@ -18,14 +16,13 @@ var Protocol = function(name, methods, bridge) {
   return methods;
 };
 
-Protocol.prototype.sendMethodCall = function(name, args) {
-  var msg = new Message(name, args);
+Protocol.prototype.sendMethodCall = function(method, args) {
+  var msg = new Message(this.tag, method, args);
   return this.sendMessage(msg);
 };
 
-Protocol.prototype.recvMethodCall = function(msg) {
-  var json = this.checkMethodCall(msg);
-  if (!json) {
+Protocol.prototype.recvMethodCall = function(json) {
+  if (!this.checkMethodCall(json)) {
     return;
   }
 
@@ -35,22 +32,15 @@ Protocol.prototype.recvMethodCall = function(msg) {
     return;
   }
 
-  if ('method' in json) {
-    var methodName = 'recv' + json.method;
-    if (!(methodName in this.methods)) {
-      throw new Error('Method ' + methodName + ' does not exists');
-    }
-  }
-
   var self = this;
-  this.methods[methodName](
+  this.methods['recv' + json.method](
     function resolve(rv) {
-      var msg = new SuccessMessage(uuid, rv);
+      var msg = new SuccessMessage(self.tag, uuid, rv);
       self.sendMessage(msg);
     },
 
     function reject(rv) {
-      var msg = new FailureMessage(uuid, rv);
+      var msg = new FailureMessage(self.tag, uuid, rv);
       self.sendMessage(msg);
     },
 
@@ -59,12 +49,6 @@ Protocol.prototype.recvMethodCall = function(msg) {
 };
 
 Protocol.prototype.sendMessage = function(json) {
-  json.tag = this.name;
-
-  if (!'uuid' in json) {
-    throw new Error('Message does not have an uuid');
-  }
-
   this.bridge.postMessage(json);
 
   if (json.method) {
@@ -74,21 +58,14 @@ Protocol.prototype.sendMessage = function(json) {
   return null;
 };
 
-Protocol.prototype.checkMethodCall = function(msg) {
-  var json = msg.data;
-
-  if (json.tag !== this.name) {
-    return null;
+Protocol.prototype.checkMethodCall = function(json) {
+  if ('method' in json) {
+    var methodName = 'recv' + json.method;
+    if (!(methodName in this.methods)) {
+      throw new Error('Method ' + methodName + ' does not exists');
+    }
   }
 
-  if (!'tag' in json) {
-    throw new Error('Message does not have a tag');
-  }
-
-  if (!'uuid' in json) {
-    throw new Error('Message does not have an uuid');
-  }
-
-  return json;
+  return true;
 };
 
