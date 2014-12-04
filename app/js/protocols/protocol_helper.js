@@ -93,9 +93,6 @@ importScripts('/calculator/app/js/protocols/bridge.js');
 //     parameter, and so |impl| would be replace by a |config|
 //     object.
 var IPDLProtocol = function(target, name, impl) {
-  if (!target) {
-    throw new Error(name + ': |target| can\'t be ' + target);
-  }
 
   var ipdl = new IPDL(name, impl);
   var bridge = new Bridge(target, ipdl);

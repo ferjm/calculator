@@ -43,6 +43,11 @@ function Bridge(target, ipdl) {
  * BridgeWindowToWorker
  */
 function BridgeWindowToWorker(target) {
+  if (!target) {
+    var msg = 'Need an explicit target for a window->worker bridge';
+    throw new Error(msg);
+  }
+
   this.target = target;
 }
 
@@ -59,6 +64,13 @@ BridgeWindowToWorker.prototype.postMessage = function(msg) {
  * BridgeWindowToServiceWorker
  */
 function BridgeWindowToServiceWorker(target) {
+  if (!target && !navigator.serviceWorker.controller) {
+    var msg =
+      'Need an explicit target for a window->serviceworker ' +
+       'if the page is not controlled.';
+    throw new Error(msg);
+  }
+
   this.target = target;
 }
 
