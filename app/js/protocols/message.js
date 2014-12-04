@@ -26,7 +26,3 @@ function FailureMessage(tag, uuid, rv) {
   this.success = false;
 }
 
-var MessageHelper = {
-  validate: function(msg) {
-  }
-};
