@@ -25,3 +25,4 @@ function importScripts(script) {
   document.head.appendChild(element);
 }
 
+importScripts('/calculator/app/js/string-polyfill.js');
