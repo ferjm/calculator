@@ -75,6 +75,7 @@
 //    );
 //  };
 //  
+
 importScripts('/calculator/app/js/protocols/ipdl.js');
 importScripts('/calculator/app/js/protocols/bridge.js');
 importScripts('/calculator/app/js/protocols/protocol.js');
@@ -82,6 +83,8 @@ importScripts('/calculator/app/js/protocols/protocol.js');
 var IPDLProtocol = function(name, target) {
   var ipdl = new IPDL(name);
   var bridge = new Bridge(name, ipdl, target);
-  return new Protocol(name, ipdl.ast[ipdl.side], bridge);
+  var protocol = new Protocol(ipdl.ast[ipdl.side], bridge);
+
+  return ipdl.ast[ipdl.side];
 };
 

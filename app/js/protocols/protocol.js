@@ -3,69 +3,60 @@
 importScripts('/calculator/app/js/protocols/message.js');
 importScripts('/calculator/app/js/protocols/store.js');
 
-var Protocol = function(name, methods, bridge) {
-  this.tag = name;
-
-  this.methods = methods;
-  this.bridge = bridge;
+var Protocol = function(methods, bridge) {
   this.store = new PromiseStore();
 
-  methods._call = this.sendMethodCall.bind(this);
-  bridge.recvMessage = this.recvMethodCall.bind(this);
+  this.methods = methods;
+  methods._call = this.onMethodCallBeforeBridge.bind(this);
 
-  return methods;
+  this.bridge = bridge;
+  bridge.recvMessage = this.recvBridgeMessage.bind(this);
 };
 
-Protocol.prototype.sendMethodCall = function(method, args) {
-  var msg = new Message(this.tag, method, args);
-  return this.sendMessage(msg);
-};
-
-Protocol.prototype.recvMethodCall = function(json) {
-  if (!this.checkMethodCall(json)) {
-    return;
+Protocol.prototype.recvBridgeMessage = function(json) {
+  if ('method' in json) {
+    this.onMethodCallAfterBridge(json);
+  } else {
+    this.onMethodResolveBeforeBridge(json);
   }
+};
 
+Protocol.prototype.onMethodCallBeforeBridge = function(method, args) {
+  var msg = new Message(this.bridge.tag, method, args);
+  this.bridge.postMessage(msg);
+
+  return this.store.new(msg.uuid);
+};
+
+Protocol.prototype.onMethodResolveBeforeBridge = function(json) {
   var uuid = json.uuid;
-  if (this.store.has(uuid)) {
-    this.store.resolve(uuid, json.success, json.rv);
-    return;
+  if (!this.store.has(uuid)) {
+    throw new Error('There is no promise for method.');
   }
 
-  var self = this;
-  this.methods['recv' + json.method](
-    function resolve(rv) {
-      var msg = new SuccessMessage(self.tag, uuid, rv);
-      self.sendMessage(msg);
-    },
+  this.store.resolve(uuid, json.success, json.rv);
+};
 
-    function reject(rv) {
-      var msg = new FailureMessage(self.tag, uuid, rv);
-      self.sendMessage(msg);
-    },
+Protocol.prototype.onMethodCallAfterBridge = function(json) {
+  var methodName = 'recv' + json.method;
+  if (!methodName in this.methods) {
+    throw new Error('Method ' + methodName + ' does not exists.');
+  }
 
+  this.methods[methodName](
+    this.onMethodResolveAfterBridge.bind(this, json.uuid),
+    this.onMethodRejectAfterBridge.bind(this, json.uuid),
     json.args
   );
 };
 
-Protocol.prototype.sendMessage = function(json) {
-  this.bridge.postMessage(json);
-
-  if (json.method) {
-    return this.store.new(json.uuid);
-  }
-
-  return null;
+Protocol.prototype.onMethodResolveAfterBridge = function(uuid, rv) {
+  var msg = new SuccessMessage(this.bridge.tag, uuid, rv);
+  this.bridge.postMessage(msg);
 };
 
-Protocol.prototype.checkMethodCall = function(json) {
-  if ('method' in json) {
-    var methodName = 'recv' + json.method;
-    if (!(methodName in this.methods)) {
-      throw new Error('Method ' + methodName + ' does not exists');
-    }
-  }
-
-  return true;
+Protocol.prototype.onMethodRejectAfterBridge = function(uuid, rv) {
+  var msg = new FailureMessage(this.bridge.tag, uuid, rv);
+  this.bridge.postMessage(msg);
 };
 
