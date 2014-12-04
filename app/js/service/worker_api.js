@@ -17,10 +17,13 @@ var implementation = {
 
           var originalUrl = filename;
           cache.delete(originalUrl).then(function onDeleted() {
-            var opts = {};
-            opts['headers'] = { 'content-type': getContentType(filename) };
+            var opts = {
+              'headers': { 'content-type': getContentType(filename) },
+              'type': 'basic'
+            };
 
-            cache.put(originalUrl, rv[filename]).then(function onSaved() {
+            var newResponse = new Response(rv[filename], opts);
+            cache.put(originalUrl, newResponse).then(function onSaved() {
               filesToUpdate--;
               if (filesToUpdate === 0) {
                 promise.resolve(true);

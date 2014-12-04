@@ -21,7 +21,9 @@ function CacheAPI() {
 }
 
 CacheAPI.prototype.put = function(key, response) {
-  return this.protocol.sendPut(key, response);
+  return response.text().then(function(data) {
+    return this.protocol.sendPut(key, data);
+  }.bind(this));
 };
 
 CacheAPI.prototype.delete = function(key) {
