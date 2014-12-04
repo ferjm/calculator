@@ -24,8 +24,14 @@ Protocol.prototype.sendMethodCall = function(name, args) {
 };
 
 Protocol.prototype.recvMethodCall = function(msg) {
-  var json = this.recvMessage(msg);
+  var json = this.checkMethodCall(msg);
   if (!json) {
+    return;
+  }
+
+  var uuid = json.uuid;
+  if (this.store.has(uuid)) {
+    this.store.resolve(uuid, json.success, json.rv);
     return;
   }
 
@@ -39,12 +45,12 @@ Protocol.prototype.recvMethodCall = function(msg) {
   var self = this;
   this.methods[methodName](
     function resolve(rv) {
-      var msg = new SuccessMessage(json.uuid, rv);
+      var msg = new SuccessMessage(uuid, rv);
       self.sendMessage(msg);
     },
 
     function reject(rv) {
-      var msg = new FailureMessage(json.uuid, rv);
+      var msg = new FailureMessage(uuid, rv);
       self.sendMessage(msg);
     },
 
@@ -68,8 +74,12 @@ Protocol.prototype.sendMessage = function(json) {
   return null;
 };
 
-Protocol.prototype.recvMessage = function(msg) {
+Protocol.prototype.checkMethodCall = function(msg) {
   var json = msg.data;
+
+  if (json.tag !== this.name) {
+    return null;
+  }
 
   if (!'tag' in json) {
     throw new Error('Message does not have a tag');
@@ -77,16 +87,6 @@ Protocol.prototype.recvMessage = function(msg) {
 
   if (!'uuid' in json) {
     throw new Error('Message does not have an uuid');
-  }
-
-  if (json.tag !== this.name) {
-    return;
-  }
-
-  var uuid = json.uuid;
-  if (this.store.has(uuid)) {
-    this.store.resolve(uuid, json.success, json.rv);
-    return null;
   }
 
   return json;
