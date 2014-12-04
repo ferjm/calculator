@@ -79,6 +79,7 @@
 //  
 importScripts('/calculator/app/js/protocols/utils/uuid.js');
 importScripts('/calculator/app/js/protocols/ipdl.js');
+importScripts('/calculator/app/js/protocols/bridge.js');
 
 // Every protocol got a name shared between the 2 end points, and every
 // message is identified by a uuid.
@@ -97,92 +98,8 @@ var IPDLProtocol = function(target, name, impl) {
   }
 
   var ipdl = new IPDL(name, impl);
-
-  var bridge = this.makeBridge(target, ipdl);
+  var bridge = new Bridge(target, ipdl);
   return new Protocol(bridge, name, ipdl);
-};
-
-IPDLProtocol.prototype.makeBridge = function(target, ipdl) {
-  function throwNotSupported(side, otherside) {
-    var msg = 'Creating a bridge from ' +
-              side +
-              ' to ' +
-              otherside +
-              ' is not supported.';
-    throw new Error(msg);
-  }
-
-  var bridge = {
-    addEventListener: function(type, callback) {
-      addEventListener(type, callback);
-    },
-
-    postMessage: function(msg) {
-      target.postMessage(msg);
-    }
-  };
-
-  debug('Creating a bridge from ' +
-        ipdl.side +
-        ' to ' +
-        ipdl.otherside +
-        ' for ' +
-        target);
-
-  switch (ipdl.side) {
-    case 'window':
-
-      switch (ipdl.otherside) {
-        case 'worker':
-          bridge.addEventListener = function(type, callback) {
-            target.addEventListener(type, callback);
-          };
-          break;
-
-        case 'serviceworker':
-          break;
-
-        default:
-          throwNotSupported(ipdl.side, ipdl.otherside);
-          break;
-      }
-      break;
-
-
-      case 'worker':
-        switch (ipdl.otherside) {
-          case 'window':
-            bridge.postMessage = function(msg) {
-              postMessage(msg);
-            };
-            break;
-
-          default:
-            throwNotSupported(ipdl.side, ipdl.otherside);
-            break;
-        }
-        break;
-
-      case 'serviceworker':
-        switch (ipdl.otherside) {
-          case 'window':
-            bridge.postMessage = function(msg) {
-              clients.getAll().then(function(windows) {
-                windows.forEach(function(window) {
-                  window.postMessage(msg);
-                });
-              });
-            };
-            break;
-
-          default:
-            throwNotSupported(ipdl.side, ipdl.otherside);
-            break;
-        }
-        break;
-    }
-
-  return bridge;
 };
 
 var Protocol = function(target, name, schema) {

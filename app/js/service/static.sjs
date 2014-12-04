@@ -50,6 +50,7 @@ var StaticResources = {
     inlineCache '/app/js/utils.js'
     inlineCache '/app/js/string-polyfill.js'
     inlineCache '/app/js/async_storage.js'
+    inlineCache '/app/js/protocols/bridge.js'
     inlineCache '/app/js/protocols/ipdl.js'
     inlineCache '/app/js/protocols/ipdl_parser.js'
     inlineCache '/app/js/protocols/protocol_helper.js'
