@@ -4,7 +4,6 @@ importScripts('/calculator/app/js/protocols/ipdl_parser.js');
 
 function IPDL(name) {
   this.ast = parser.parse(this._getFileContent(name));
-
   this.side = this.getSide();
   this.otherside = this.getOtherSide();
 }

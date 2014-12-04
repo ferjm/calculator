@@ -10,20 +10,20 @@ window.addEventListener('load', function() {
 
   var protocol = new IPDLProtocol('cache');
 
-  protocol.recvPut = function(promise) {
-    var key = location.protocol + '//' + location.host + promise.args.key;
-    var response = promise.args.response;
+  protocol.recvPut = function(resolve, reject, args) {
+    var key = location.protocol + '//' + location.host + args.key;
+    var response = args.response;
 
     asyncStorage.setItem(key, response, function onSuccess() {
-      promise.resolve();
+      resolve();
     });
   };
 
-  protocol.recvDelete = function(promise) {
-    var key = location.protocol + '//' + location.host + promise.args.key;
+  protocol.recvDelete = function(resolve, reject, args) {
+    var key = location.protocol + '//' + location.host + args.key;
 
     asyncStorage.removeItem(key, function onSuccess() {
-      promise.resolve();
+      resolve();
     });
   };
 });

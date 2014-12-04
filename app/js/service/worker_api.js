@@ -5,11 +5,11 @@ importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 var protocol = new IPDLProtocol('service');
 
-protocol.recvApplyUpdate = function(promise) {
+protocol.recvApplyUpdate = function(resolve, reject, args) {
   var self = this;
   var filesToUpdate = 0;
 
-  var rv = promise.args.updatedFiles;
+  var rv = args.updatedFiles;
   for (var filename in rv) {
     filesToUpdate++;
 
@@ -27,7 +27,7 @@ protocol.recvApplyUpdate = function(promise) {
           cache.put(originalUrl, newResponse).then(function onSaved() {
             filesToUpdate--;
             if (filesToUpdate === 0) {
-              promise.resolve(true);
+              resolve(true);
             }
           });
         });
@@ -37,7 +37,7 @@ protocol.recvApplyUpdate = function(promise) {
 
   // There was nothing to update...
   if (filesToUpdate === 0) {
-    promise.reject(false);
+    reject(false);
   }
 };
 

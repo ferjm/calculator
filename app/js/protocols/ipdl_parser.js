@@ -359,11 +359,7 @@ parse: function parse(input) {
   }
 
   Protocol.prototype.generateBindingFor = function(targetSide) {
-    /** TODO:
-     *  Should |msg| be |reject, resolve, args| to be closer to the
-     *  promise mechanism ?
-     */
-    function recv(/* Promise */ msg) {};
+    function recv(reject, resolve, args) {};
 
     function send(name, args) {
       return /* Promise */ this._call(name, args);

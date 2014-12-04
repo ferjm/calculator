@@ -9,15 +9,15 @@ window.addEventListener('load', function() {
   if (navigator.serviceWorker.controller) {
     var protocol = new IPDLProtocol('cacheStorage');
 
-    protocol.recvMatch = function(promise) {
-      var key = promise.args.key;
+    protocol.recvMatch = function(resolve, reject, args) {
+      var key = args.key;
       if (!key.startsWith('http')) {
-        key = location.protocol + '//' + location.host + promise.args.key;
+        key = location.protocol + '//' + location.host + key;
       }
 
       debug('recvMatch: ' + key);
       asyncStorage.getItem(key, function(value) {
-        promise.resolve(value);
+        resolve(value);
       });
     }
   }

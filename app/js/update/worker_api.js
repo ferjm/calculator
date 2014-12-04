@@ -13,7 +13,7 @@ function debug(str) {
 
 var protocol = new IPDLProtocol('update');
 
-protocol.recvCheckForUpdate = function(promise) {
+protocol.recvCheckForUpdate = function(resolve, reject, args) {
   var self = this;
 
   Config.getUpdateInfos().then(
@@ -24,29 +24,29 @@ protocol.recvCheckForUpdate = function(promise) {
           // of a GET, and retrieve the Content-Length header.
           //     But github, does not seems to allow that :(
           //var length = this.getResponseHeader('Content-Length');
-          promise.resolve(content.length);
+          resolve(content.length);
         },
 
         function onFileContentError(rv) {
-          promise.reject(rv);
+          reject(rv);
         }
       );
     },
 
     function onUpdateInfosError(rv) {
-      promise.reject(rv);
+      reject(rv);
     }
   );
 };
 
-protocol.recvApplyUpdate = function(promise) {
+protocol.recvApplyUpdate = function(resolve, reject, args) {
   var self = this;
 
   Config.getUpdateInfos().then(
     function onUpdateUrlSuccess(updateInfos) {
-      if (promise.args.updateUrl) {
+      if (args.updateUrl) {
         updateInfos = {
-          'url': promise.args.updateUrl,
+          'url': args.updateUrl,
           'headers': {}
         };
       }
@@ -54,17 +54,17 @@ protocol.recvApplyUpdate = function(promise) {
       self._getFileContent(updateInfos).then(
         function onFileContentSuccess(content) {
           var rv = UpdateUtils.apply(content);
-          promise.resolve(rv);
+          resolve(rv);
         },
 
         function onFileContentError(rv) {
-          promise.reject(rv);
+          reject(rv);
         }
       );
     },
 
     function onUpdateInfosError(rv) {
-      promise.reject(rv);
+      reject(rv);
     }
   );
 };

@@ -50,27 +50,27 @@
 //  *************
 //  var protocol = new IPDLProtocol('update');
 //
-//  protocol.recvCheckForUpdate = function(msg) {
+//  protocol.recvCheckForUpdate = function(resolve, reject, args) {
 //    var xhr = new XMLHttpRequest();
 //    xhr.open('GET', kServerUrl, true);
 //    xhr.send();
 //    xhr.onload = function() {
-//      msg.resolve(this.responseText);
+//      resolve(this.responseText);
 //    };
 //    
 //    xhr.onerror = function() {
-//      msg.reject(this.status);
+//      reject(this.status);
 //    };
 //  };
 //
-//  protocol.recvApplyUpdate = function(msg) {
-//    applyUpdate(msg.args.updateUrl).then(
+//  protocol.recvApplyUpdate = function(resolve, reject, args) {
+//    applyUpdate(args.updateUrl).then(
 //      function success(rv) {
-//        msg.resolve(rv);
+//        resolve(rv);
 //      },
 //
 //      function error(rv) {
-//        msg.reject(rv);
+//        reject(rv);
 //      }
 //    );
 //  };
@@ -145,8 +145,10 @@ var Protocol = function(name, methods, bridge) {
       rejectCallback(rv);
     };
 
-    promise.args = data.args;
-    methods['recv' + data.method].call(methods, promise);
+    methods['recv' + data.method].call(methods,
+                                       promise.resolve,
+                                       promise.reject,
+                                       data.args);
   };
 
   return methods;
