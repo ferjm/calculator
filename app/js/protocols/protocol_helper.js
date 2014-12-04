@@ -89,69 +89,49 @@ var IPDLProtocol = function(name, target) {
 
 var Protocol = function(name, methods, bridge) {
   this.name = name;
+  this.methods = methods;
   this.bridge = bridge;
+
   this._queue = {};
 
-  var self = this;
-
-  bridge.recvMessage = function(msg) {
-    var json = self.recvMessage(msg);
-    if (!json) {
-      return;
-    }
-
-    if ('method' in json) {
-      var methodName = 'recv' + json.method;
-      if (!(methodName in methods)) {
-        throw new Error('Method ' + methodName + ' does not exists');
-      }
-    }
-
-    methods._recv(json);
-  };
-
-  methods._call = function(name, args) {
-    return self.sendMessage({
-      'uuid': generateUUID(),
-      'method': name,
-      'args': args
-    });
-  };
-
-  methods._recv = function(data) {
-    var resolveCallback = null;
-    var rejectCallback = null;
-    var promise = new Promise(function(resolve, reject) {
-      resolveCallback = resolve;
-      rejectCallback = reject;
-    });
-
-    promise.resolve = function(rv) {
-      self.sendMessage({
-        'uuid': data.uuid,
-        'success': true,
-        'rv': rv
-      });
-      resolveCallback(rv);
-    };
-
-    promise.reject = function(rv) {
-      self.sendMessage({
-        'uuid': data.uuid,
-        'success': false,
-        'rv': rv
-      });
-
-      rejectCallback(rv);
-    };
-
-    methods['recv' + data.method].call(methods,
-                                       promise.resolve,
-                                       promise.reject,
-                                       data.args);
-  };
+  methods._call = this.sendMethodCall.bind(this);
+  bridge.recvMessage = this.recvMethodCall.bind(this);
 
   return methods;
+};
+
+Protocol.prototype.sendMethodCall = function(name, args) {
+  var msg = new Message(name, args);
+  return this.sendMessage(msg);
+};
+
+Protocol.prototype.recvMethodCall = function(msg) {
+  var json = this.recvMessage(msg);
+  if (!json) {
+    return;
+  }
+
+  if ('method' in json) {
+    var methodName = 'recv' + json.method;
+    if (!(methodName in this.methods)) {
+      throw new Error('Method ' + methodName + ' does not exists');
+    }
+  }
+
+  var self = this;
+  this.methods[methodName](
+    function resolve(rv) {
+      var msg = new SuccessMessage(json.uuid, rv);
+      self.sendMessage(msg);
+    },
+
+    function reject(rv) {
+      var msg = new FailureMessage(json.uuid, rv);
+      self.sendMessage(msg);
+    },
+
+    json.args
+  );
 };
 
 Protocol.prototype.sendMessage = function(json) {
@@ -179,6 +159,7 @@ Protocol.prototype.sendMessage = function(json) {
 
   return null;
 };
+
 
 Protocol.prototype.recvMessage = function(msg) {
   var json = msg.data;
@@ -211,3 +192,20 @@ Protocol.prototype.recvMessage = function(msg) {
   return json;
 };
 
+function Message(method, args) {
+  this.uuid = generateUUID();
+  this.method = method;
+  this.args = args;
+};
+
+function SuccessMessage(uuid, rv) {
+  this.uuid = uuid;
+  this.rv = rv;
+  this.success = true;
+}
+
+function FailureMessage(uuid, rv) {
+  this.uuid = uuid;
+  this.rv = rv;
+  this.success = false;
+}
