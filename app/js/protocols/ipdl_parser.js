@@ -72,12 +72,12 @@
   }
 */
 var parser = (function(){
-var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,11],$V1=[1,12],$V2=[1,13],$V3=[1,14],$V4=[10,16,17,18,19],$V5=[1,22],$V6=[1,23],$V7=[1,31],$V8=[1,35];
+var o=function(k,v,o,l){for(o=o||{},l=k.length;l--;o[k[l]]=v);return o},$V0=[1,13],$V1=[1,12],$V2=[10,12,14],$V3=[1,23],$V4=[1,24],$V5=[1,36],$V6=[1,40];
 var parser = {trace: function trace() { },
 yy: {},
-symbols_: {"error":2,"ipdl":3,"protocol":4,"EOF":5,"PROTOCOL":6,"NAME":7,"{":8,"protocol_sides":9,"}":10,";":11,"protocol_side":12,"protocol_side_name":13,":":14,"protocol_methods":15,"WINDOW":16,"WORKER":17,"SERVICEWORKER":18,"BOTH":19,"protocol_method":20,"(":21,")":22,"protocol_parameters":23,"PROMISE":24,"<":25,"protocol_returns":26,">":27,"protocol_return_name":28,",":29,"protocol_parameter_name":30,"$accept":0,"$end":1},
-terminals_: {2:"error",5:"EOF",6:"PROTOCOL",7:"NAME",8:"{",10:"}",11:";",14:":",16:"WINDOW",17:"WORKER",18:"SERVICEWORKER",19:"BOTH",21:"(",22:")",24:"PROMISE",25:"<",27:">",29:","},
-productions_: [0,[3,2],[4,6],[4,5],[9,1],[9,2],[12,2],[12,3],[13,1],[13,1],[13,1],[13,1],[15,2],[15,3],[20,3],[20,4],[20,5],[20,4],[26,1],[26,3],[28,1],[23,1],[23,3],[30,1]],
+symbols_: {"error":2,"ipdl":3,"protocol":4,"EOF":5,"PROTOCOL":6,"NAME":7,"{":8,"protocol_sides":9,"}":10,";":11,"DEBUG":12,"protocol_side":13,"SIDE":14,":":15,"protocol_methods":16,"protocol_method":17,"(":18,")":19,"protocol_parameters":20,"PROMISE":21,"<":22,"protocol_returns":23,">":24,"protocol_return_name":25,",":26,"protocol_parameter_name":27,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"PROTOCOL",7:"NAME",8:"{",10:"}",11:";",12:"DEBUG",14:"SIDE",15:":",18:"(",19:")",21:"PROMISE",22:"<",24:">",26:","},
+productions_: [0,[3,2],[4,6],[4,7],[9,1],[9,2],[13,2],[13,3],[13,3],[13,4],[16,2],[16,3],[17,3],[17,4],[17,5],[17,4],[23,1],[23,3],[25,1],[20,1],[20,3],[27,1]],
 performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* action[1] */, $$ /* vstack */, _$ /* lstack */) {
 /* this == yyval */
 
@@ -86,6 +86,7 @@ switch (yystate) {
 case 1:
 
     protocols = $$[$0-1];
+    debug(protocols.toString());
     this.$ = $$[$0-1];
   
 break;
@@ -96,17 +97,17 @@ case 2:
 break;
 case 3:
 
-    this.$ = new Protocol($$[$0-3], []);
+    this.$ = new DebugProtocol($$[$0-4], $$[$0-2]);
   
 break;
-case 4: case 18: case 21:
+case 4: case 16: case 19:
 
     this.$ = [$$[$0]];
   
 break;
 case 5:
 
-    this.$ = aggregate($$[$0-1], $$[$0]);
+    this.$ = aggregate($$[$0], $$[$0-1]);
   
 break;
 case 6:
@@ -116,58 +117,63 @@ case 6:
 break;
 case 7:
 
+    this.$ = new DebugSide($$[$0-1], []);
+  
+break;
+case 8:
+
     this.$ = new Side($$[$0-2], $$[$0]);
   
 break;
-case 8: case 9: case 10: case 11:
+case 9:
 
-    this.$ = $$[$0];
+    this.$ = new DebugSide($$[$0-2], $$[$0]);
   
 break;
-case 12:
+case 10:
 
     this.$ = [$$[$0-1]];
   
 break;
-case 13: case 19: case 22:
+case 11: case 17: case 20:
 
     this.$ = aggregate($$[$0-2], $$[$0]);
   
 break;
-case 14:
+case 12:
 
     this.$ = new Method($$[$0-2], []);
   
 break;
-case 15:
+case 13:
 
     this.$ = new Method($$[$0-3], $$[$0-1]);
   
 break;
-case 16:
+case 14:
 
     this.$ = new ReturnMethod($$[$0], $$[$0-2]);
   
 break;
-case 17:
+case 15:
 
     this.$ = new ReturnMethod($$[$0], []);
   
 break;
-case 20:
+case 18:
 
     this.$ = new Return($$[$0]);
   
 break;
-case 23:
+case 21:
 
     this.$ = new Parameter($$[$0]);
   
 break;
 }
 },
-table: [{3:1,4:2,6:[1,3]},{1:[3]},{5:[1,4]},{7:[1,5]},{1:[2,1]},{8:[1,6]},{9:7,10:[1,8],12:9,13:10,16:$V0,17:$V1,18:$V2,19:$V3},{10:[1,15]},{11:[1,16]},{9:17,10:[2,4],12:9,13:10,16:$V0,17:$V1,18:$V2,19:$V3},{14:[1,18]},{14:[2,8]},{14:[2,9]},{14:[2,10]},{14:[2,11]},{11:[1,19]},{5:[2,3]},{10:[2,5]},o($V4,[2,6],{15:20,20:21,7:$V5,24:$V6}),{5:[2,2]},o($V4,[2,7]),{11:[1,24]},{21:[1,25]},{25:[1,26]},o($V4,[2,12],{20:21,15:27,7:$V5,24:$V6}),{7:$V7,22:[1,28],23:29,30:30},{7:$V8,26:32,27:[1,33],28:34},o($V4,[2,13]),{11:[2,14]},{22:[1,36]},{22:[2,21],29:[1,37]},o([22,29],[2,23]),{27:[1,38]},{7:$V5,20:39,24:$V6},{27:[2,18],29:[1,40]},o([27,29],[2,20]),{11:[2,15]},{7:$V7,23:41,30:30},{7:$V5,20:42,24:$V6},{11:[2,17]},{7:$V8,26:43,28:34},{22:[2,22]},{11:[2,16]},{27:[2,19]}],
-defaultActions: {4:[2,1],11:[2,8],12:[2,9],13:[2,10],14:[2,11],16:[2,3],17:[2,5],19:[2,2],28:[2,14],36:[2,15],39:[2,17],41:[2,22],42:[2,16],43:[2,19]},
+table: [{3:1,4:2,6:[1,3],12:[1,4]},{1:[3]},{5:[1,5]},{7:[1,6]},{6:[1,7]},{1:[2,1]},{8:[1,8]},{7:[1,9]},{9:10,12:$V0,13:11,14:$V1},{8:[1,14]},{10:[1,15],12:$V0,13:16,14:$V1},o($V2,[2,4]),{15:[1,17]},{14:[1,18]},{9:19,12:$V0,13:11,14:$V1},{11:[1,20]},o($V2,[2,5]),o($V2,[2,6],{16:21,17:22,7:$V3,21:$V4}),{15:[1,25]},{10:[1,26],12:$V0,13:16,14:$V1},{5:[2,2]},o($V2,[2,8]),{11:[1,27]},{18:[1,28]},{22:[1,29]},o($V2,[2,7],{17:22,16:30,7:$V3,21:$V4}),{11:[1,31]},o($V2,[2,10],{17:22,16:32,7:$V3,21:$V4}),{7:$V5,19:[1,33],20:34,27:35},{7:$V6,23:37,24:[1,38],25:39},o($V2,[2,9]),{5:[2,3]},o($V2,[2,11]),{11:[2,12]},{19:[1,41]},{19:[2,19],26:[1,42]},o([19,26],[2,21]),{24:[1,43]},{7:$V3,17:44,21:$V4},{24:[2,16],26:[1,45]},o([24,26],[2,18]),{11:[2,13]},{7:$V5,20:46,27:35},{7:$V3,17:47,21:$V4},{11:[2,15]},{7:$V6,23:48,25:39},{19:[2,20]},{11:[2,14]},{24:[2,17]}],
+defaultActions: {5:[2,1],20:[2,2],31:[2,3],33:[2,12],41:[2,13],44:[2,15],46:[2,20],47:[2,14],48:[2,17]},
 parseError: function parseError(str, hash) {
     if (hash.recoverable) {
         this.trace(str);
@@ -338,6 +344,12 @@ parse: function parse(input) {
     return name.charAt(0).toUpperCase() + name.slice(1)
   }
 
+  function DebugProtocol(name, sides) {
+    var protocol = new Protocol(name, sides);
+    protocol.debug = true;
+    return protocol;
+  }
+
   function Protocol(name, sides) {
     if (name[0] !== 'P') {
       error('The protocol name should start with a \'P\'');
@@ -398,10 +410,21 @@ parse: function parse(input) {
 
   Protocol.prototype.toString = function() {
     var str = '';
-    str += 'Protocol: ' + this.name + '\n';
+    if (this.debug) {
+      str += 'DebugProtocol: ';
+    } else {
+      str += 'Protocol: ';
+    }
+
+    str += this.name + '\n';
 
     this.sides.forEach(function(side) {
-      str += '  side: ' + side.name + '\n';
+      if (side.debug) {
+        str += '  DebugSide: ';
+      } else {
+        str += '  Side: ';
+      }
+      str += side.name + '\n';
 
       side.methods.forEach(function(method) {
         str += '    method: ' + method.name + '\n';
@@ -416,30 +439,33 @@ parse: function parse(input) {
       });
     });
 
-    str += '\n--- window Side ---\n';
-    for (var method in this.window) {
-      str += '  ' + method + ': ' + this.window[method] + '\n';
-    }
-
-    str += '\n--- worker Side ---\n';
-    for (var method in this.worker) {
-      str += '  ' + method + ': ' + this.worker[method] + '\n';
-    }
-
-    str += '\n--- serviceworker Side ---\n';
-    for (var method in this.serviceworker) {
-      str += '  ' + method + ': ' + this.serviceworker[method] + '\n';
-    }
-
+    this.sides.forEach(function(side) {
+      str += '\n--- ' + side.name + ' Side ---\n';
+      for (var method in this[side.name]) {
+        str += '  ' + method + ': ' + this[side.name][method] + '\n';
+      }
+    }, this);
 
     return str;
   };
+
+  function DebugReturnMethod(method, returns) {
+    var returnMethod = new ReturnMethod(method, returns);
+    returnMethod.debug = true;
+    return returnMethod;
+  }
 
   function ReturnMethod(method, returns) {
     this.type = 'method';
     this.name = method.name;
     this.parameters = method.parameters;
     this.returns = returns;
+  }
+
+  function DebugMethod(name, parameters) {
+    var method = new Method(name, parameters);
+    method.debug = true;
+    return method;
   }
 
   function Method(name, parameters) {
@@ -459,6 +485,12 @@ parse: function parse(input) {
     this.name = name;
   }
 
+  function DebugSide(name, methods) {
+    var side = new Side(name, methods);
+    side.debug = true;
+    return side;
+  }
+
   function Side(name, methods) {
     this.type = 'side';
     this.name = name;
@@ -470,9 +502,9 @@ var oldParser = parser.parse;
 parser.parse = function() {
   var args = Array.prototype.slice.call(arguments);
   var rv = oldParser.apply(parser, args);
-  debug(protocols.toString());
   return protocols || null;
 }
+
 /* generated by jison-lex 0.3.4 */
 var lexer = (function(){
 var lexer = ({
@@ -807,42 +839,38 @@ case 1:/* skip comments */
 break;
 case 2:return 6
 break;
-case 3:return 24
+case 3:return 21
 break;
-case 4:return 16
+case 4:return 14
 break;
-case 5:return 17
+case 5:return 12
 break;
-case 6:return 18
+case 6:return 7
 break;
-case 7:return 19
+case 7:return 8
 break;
-case 8:return 7
+case 8:return 10
 break;
-case 9:return 8
+case 9:return 18
 break;
-case 10:return 10
+case 10:return 19
 break;
-case 11:return 21
+case 11:return 22
 break;
-case 12:return 22
+case 12:return 24
 break;
-case 13:return 25
+case 13:return 15
 break;
-case 14:return 27
+case 14:return 11
 break;
-case 15:return 14
+case 15:return 26
 break;
-case 16:return 11
-break;
-case 17:return 29
-break;
-case 18:return 5
+case 16:return 5
 break;
 }
 },
-rules: [/^(?:\s+)/,/^(?:\/\*(.|\r|\n)*?\*\/)/,/^(?:protocol\b)/,/^(?:Promise\b)/,/^(?:window\b)/,/^(?:worker\b)/,/^(?:serviceworker\b)/,/^(?:both\b)/,/^(?:[a-zA-Z]+)/,/^(?:\{)/,/^(?:\})/,/^(?:\()/,/^(?:\))/,/^(?:<)/,/^(?:>)/,/^(?::)/,/^(?:;)/,/^(?:,)/,/^(?:$)/],
-conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],"inclusive":true}}
+rules: [/^(?:\s+)/,/^(?:(\/\*(.|\r|\n)*?\*\/))/,/^(?:protocol\b)/,/^(?:Promise\b)/,/^(?:((window\b)|(worker\b)|(serviceworker\b)|(both\b)))/,/^(?:(debug\b))/,/^(?:[a-zA-Z]+)/,/^(?:\{)/,/^(?:\})/,/^(?:\()/,/^(?:\))/,/^(?:<)/,/^(?:>)/,/^(?::)/,/^(?:;)/,/^(?:,)/,/^(?:$)/],
+conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],"inclusive":true}}
 });
 return lexer;
 })();
