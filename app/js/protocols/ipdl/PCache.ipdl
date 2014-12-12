@@ -1,7 +1,7 @@
 
 protocol PCache
 {
-  window:
+  debug window:
     Put(key, response);
     Delete(key);
 

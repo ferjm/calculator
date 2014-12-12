@@ -82,7 +82,7 @@ importScripts('/calculator/app/js/protocols/protocol.js');
 
 var IPDLProtocol = function(name, target) {
   var ipdl = new IPDL(name);
-  var bridge = new Bridge(name, ipdl, target);
+  var bridge = BridgeHelper.createNewBridge(name, ipdl, target);
   var protocol = new Protocol(ipdl.ast[ipdl.side], bridge);
 
   return ipdl.ast[ipdl.side];
