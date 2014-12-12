@@ -1,11 +1,5 @@
 'use strict';
 
-/*
- * XXX In the ipdl file this is possible to add a |debug|
- * instruction in front of a protocol, or a particular side.
- * It would be nice to reflect this |debug| keyword here.
- */
-
 var BridgeHelper = {
   map: {
     'window->worker': BridgeWindowToWorker,
@@ -23,7 +17,7 @@ var BridgeHelper = {
       throw new Error('Bridge needs an ipdl description.');
     }
 
-    var direction = ipdl.side + '->' + ipdl.otherside;
+    var direction = ipdl.side.name + '->' + ipdl.otherside.name;
     var bridge = this.map[direction];
     if (!bridge) {
       throw new Error('Bridge for ' +
@@ -41,7 +35,7 @@ var BridgeHelper = {
 function Bridge(tag, ipdl, target) {
   debug(
     'Creating a bridge for ' +
-    ipdl.side + '->' + ipdl.otherside +
+    ipdl.side.name + '->' + ipdl.otherside.name +
     ' for ' +
     target +
     ' (' + tag + ')'
@@ -50,21 +44,22 @@ function Bridge(tag, ipdl, target) {
   this.tag = tag;
   this.ipdl = ipdl;
   this.target = target;
-
-  // The ipdl file format allow a debug keyword to debug
-  // messages sent from one side to an other side.
-  this.debug = ipdl.ast.sides.find(function(side) {
-    return ipdl.side == side.name;
-  }, this).debug;
+  this.debug = this.ipdl.debug || this.ipdl.side.debug;
 
   this.listenMessage();
 }
 
 Bridge.prototype = {
+  /**
+   * Needs to be overidden by the class that inherit from Bridge.
+   */
   listenMessage: function bridge_listenMessage() {
     throw new Error('Not implemented.');
   },
 
+  /**
+   * Needs to be overidden by the class that inherit from Bridge.
+   */
   forwardMessage: function bridge_forwardMessage() {
     throw new Error('Not implemented.');
   },
@@ -113,8 +108,8 @@ Bridge.prototype = {
   dump: function bridge_dump(json, revert) {
     if (this.debug) {
       var direction = revert ?
-        this.ipdl.otherside + '->' + this.ipdl.side :
-        this.ipdl.side + '->' + this.ipdl.otherside;
+        this.ipdl.otherside.name + '->' + this.ipdl.side.name :
+        this.ipdl.side.name + '->' + this.ipdl.otherside.name;
 
       debug('[' + this.tag + '] ' + direction);
       for (var prop in json) {
@@ -133,9 +128,9 @@ function BridgeWindowToWorker(tag, ipdl, target) {
 
   if (!this.target) {
     var msg = 'Need an explicit target for a ' +
-              this.side +
+              this.side.name +
               '->' +
-              this.otherside + 
+              this.otherside.name +
               ' bridge.';
     throw new Error(msg);
   }
@@ -159,9 +154,9 @@ function BridgeWindowToServiceWorker(tag, ipdl, target) {
 
   if (!this.target) {
     var msg = 'Need an explicit target for a ' +
-              this.side +
+              this.side.name +
               '->' +
-              this.otherside +
+              this.otherside.name +
               ' bridge if the page is not controlled.';
     throw new Error(msg);
   }

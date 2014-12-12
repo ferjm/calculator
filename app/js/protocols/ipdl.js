@@ -3,32 +3,43 @@
 importScripts('/calculator/app/js/protocols/ipdl_parser.js');
 
 function IPDL(name) {
-  this.ast = parser.parse(this._getFileContent(name));
-  this.side = this.getSide();
-  this.otherside = this.getOtherSide();
+  var ast = parser.parse(this._getFileContent(name));
+  this.side = this.getSide(ast.sides);
+  this.otherside = this.getOtherSide(ast.sides);
+  this.debug = ast.debug;
 }
 
-IPDL.prototype.getSide = function() {
-  // XXX This is a bit weak...
-  try {
-    window;
-    return 'window';
-  } catch(e) {
+IPDL.prototype.getSide = function(sides) {
+  // XXX This is very weak...
+  var sideName = '';
+
+  if (sideName === '') {
+    try {
+      window;
+      sideName = 'window';
+    } catch(e) {}
   }
 
-  try {
-    postMessage;
-    return 'worker';
-  } catch(e) {
+  if (sideName === '') {
+    try {
+      postMessage;
+      sideName = 'worker';
+    } catch(e) {}
   }
 
-  return 'serviceworker';
+  if (sideName === '') {
+    sideName = 'serviceworker';
+  }
+
+  return sides.find(function(side) {
+    return sideName == side.name;
+  }, this);
 };
 
-IPDL.prototype.getOtherSide = function() {
-  return this.ast.sides.find(function(side) {
-    return this.side != side.name;
-  }, this).name;
+IPDL.prototype.getOtherSide = function(sides) {
+  return sides.find(function(side) {
+    return this.side.name != side.name;
+  }, this);
 };
 
 IPDL.prototype._getFileContent = function(name) {

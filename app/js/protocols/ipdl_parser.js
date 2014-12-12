@@ -366,7 +366,7 @@ parse: function parse(input) {
         return;
       }
 
-      this[side.name] = this.generateBindingFor(side);
+      side.binding = this.generateBindingFor(side);
     }, this);
   }
 
