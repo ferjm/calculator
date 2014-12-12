@@ -47,6 +47,9 @@ function Bridge(tag, ipdl, target) {
   this.debug = this.ipdl.debug || this.ipdl.side.debug;
 
   this.listenMessage();
+
+  this.recvMessage = Bridge.prototype.recvMessage;
+  Object.seal(this);
 }
 
 Bridge.prototype = {
@@ -64,13 +67,16 @@ Bridge.prototype = {
     throw new Error('Not implemented.');
   },
 
+  /**
+   * Needs to be overidden by the consumer of the bridge.
+   */
+  recvMessage: function bridge_recvMessage() {
+    throw new Error('Not implemented.');
+  },
+
   handleEvent: function bridge_handleEvent(e) {
     var json = e.data;
     if (!this.checkMessage(json)) {
-      return;
-    }
-
-    if (!'recvMessage' in this) {
       return;
     }
 

@@ -11,6 +11,8 @@ var Protocol = function(methods, bridge) {
 
   this.bridge = bridge;
   bridge.recvMessage = this.recvBridgeMessage.bind(this);
+
+  Object.freeze(this);
 };
 
 Protocol.prototype.recvBridgeMessage = function(json) {
@@ -22,7 +24,7 @@ Protocol.prototype.recvBridgeMessage = function(json) {
 };
 
 Protocol.prototype.onMethodCallBeforeBridge = function(method, args) {
-  var msg = new Message(this.bridge.tag, method, args);
+  var msg = new CallMessage(this.bridge.tag, method, args);
   this.bridge.postMessage(msg);
 
   return this.store.new(msg.uuid);

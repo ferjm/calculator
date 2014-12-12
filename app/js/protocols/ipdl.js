@@ -7,6 +7,8 @@ function IPDL(name) {
   this.side = this.getSide(ast.sides);
   this.otherside = this.getOtherSide(ast.sides);
   this.debug = ast.debug;
+
+  Object.freeze(this);
 }
 
 IPDL.prototype.getSide = function(sides) {

@@ -2,6 +2,8 @@
 
 function PromiseStore() {
   this._queue = {};
+
+  Object.freeze(this);
 }
 
 PromiseStore.prototype.has = function(uuid) {
