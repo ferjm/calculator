@@ -20,7 +20,7 @@ function SmartWorker(url) {
     onmessage: null,
 
     postMessage: function vw_postMessage(message, transferable) {
-      var event = new CustomEvent('message', {
+      var event = new CustomEvent('message_virtualworker_', {
         detail: {
           data: message
         }
@@ -33,7 +33,7 @@ function SmartWorker(url) {
     },
 
     addEventListener: function vw_addEventListener(type, callback) {
-      window.addEventListener(type, callback);
+      window.addEventListener(type + '_workerscope_', callback);
     } 
   };
 
@@ -41,8 +41,6 @@ function SmartWorker(url) {
 };
 
 function WorkerSandboxScope(url)  {
-  debug(url);
-
   this.self = this;
 };
 
@@ -105,7 +103,10 @@ WorkerSandboxScope.prototype = {
   onoffline: null,
 
   // EventTarget
-  addEventListener: window.addEventListener.bind(window),
+  addEventListener: function(type, callback) {
+    var name = type + '_virtualworker_';
+    window.addEventListener(name, callback);
+  },
   removeEventListener: window.removeEventListener.bind(window),
   dispatchEvent: window.dispatchEvent.bind(window),
 
@@ -120,7 +121,7 @@ WorkerSandboxScope.prototype = {
   clearTimeout: window.clearTimeout.bind(window),
 
   postMessage: function(message) {
-      var event = new CustomEvent('message', {
+      var event = new CustomEvent('message_workerscope_', {
         detail: {
           data: message
         }
