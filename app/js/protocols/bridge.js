@@ -75,7 +75,7 @@ Bridge.prototype = {
   },
 
   handleEvent: function bridge_handleEvent(e) {
-    var json = e.data;
+    var json = e.data || e.detail.data;
     if (!this.checkMessage(json)) {
       return;
     }
@@ -96,6 +96,10 @@ Bridge.prototype = {
   },
 
   checkMessage: function bridge_checkMessage(json) {
+    if (!json) {
+      throw new Error('Message data is empty.');
+    }
+
     if (!'tag' in json) {
       throw new Error('Message does not have a tag.');
     }

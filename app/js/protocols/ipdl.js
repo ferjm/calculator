@@ -18,7 +18,11 @@ IPDL.prototype.getSide = function(sides) {
   if (sideName === '') {
     try {
       window;
-      sideName = 'window';
+      // XXX This stuff does not throw in our smartworker.
+      // Needs to understand the diff.
+      if (window !== undefined) {
+        sideName = 'window';
+      }
     } catch(e) {}
   }
 

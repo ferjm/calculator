@@ -2,6 +2,7 @@
 
 importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/static.js');
+importScripts('/calculator/app/js/service/smartworker.js');
 importScripts('/calculator/app/js/service/worker_api.js');
 importScripts('/calculator/app/js/cachestorage/worker_api.js');
 
@@ -21,6 +22,11 @@ worker.oninstall = function(e) {
 // network events
 worker.onfetch = function(e) {
   //debug(e.type + ': ' + e.request.url);
+
+  if (SmartWorkers.handle(e)) {
+    return;
+  }
+
   if (StaticResources.handle(e)) {
     return;
   }

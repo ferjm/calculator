@@ -29,6 +29,10 @@ var kCacheFiles = [
   '/calculator/app/js/service/utils.js',
   '/calculator/app/js/service/cache-polyfill.js',
 
+  // Smart Workers
+  '/calculator/app/js/smart_worker/api.js',
+  '/calculator/app/js/service/smartworker.js',
+
   // protocols
   '/calculator/app/js/protocols/ipdl.js',
   '/calculator/app/js/protocols/ipdl_parser.js',
