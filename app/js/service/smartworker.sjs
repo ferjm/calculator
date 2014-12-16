@@ -20,9 +20,6 @@ macro inlineCache {
       content = content.replace(imports[0], scriptContent);
     }
 
-    // XXX This is a dirty hack.
-    content = content.replace(/'use strict';/g, '');
-
     letstx $c = [makeValue(content, null)];
 
     var type = 'text/plain';
@@ -58,11 +55,15 @@ var SmartWorkers = {
               '  var scope = new Proxy(' +
               '    {},' +
               '    new WorkerSandbox("' + e.request.url + '"));' +
-              '  with(scope) {' +
-              '    (function() {' +
-              '      ' + resource.content +
-              '    })()' +
-              '  }' +
+              '' +
+              '  (function() {' +
+              '    with(scope) {' +
+              '      "use strict";' +
+              '      (function() {' +
+              '        ' + resource.content +
+              '      }).call(this);' +
+              '    }' +
+              '  }).call(scope);' +
               '})();';
 
             resolve(new Response(code, resource.opts));

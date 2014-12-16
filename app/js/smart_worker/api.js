@@ -112,12 +112,10 @@ WorkerSandboxScope.prototype = {
 
   // EventTarget
   addEventListener: function(type, callback) {
-    var name = type + '_virtualworker_';
-    window.addEventListener(name, callback);
+    window.addEventListener(type + '_virtualworker_', callback);
   },
   removeEventListener: function(type, callback) {
-    var name = type + '_virtualworker_';
-    window.addEventListener(name, callback);
+    window.removeEventListener(type + '_virtualworker_', callback);
   },
   dispatchEvent: window.dispatchEvent.bind(window),
 
@@ -155,7 +153,7 @@ WorkerSandboxScope.prototype = {
   Promise: window.Promise,
   JSON: window.JSON,
   Date: window.Date,
-  Error: window.Error,
+  Error: window.Error
 };
 
 /**
@@ -182,3 +180,4 @@ WorkerSandbox.prototype.get = function(target, name) {
 WorkerSandbox.prototype.has = function(target, name) {
   return true;
 };
+
