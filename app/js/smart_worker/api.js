@@ -115,7 +115,10 @@ WorkerSandboxScope.prototype = {
     var name = type + '_virtualworker_';
     window.addEventListener(name, callback);
   },
-  removeEventListener: window.removeEventListener.bind(window),
+  removeEventListener: function(type, callback) {
+    var name = type + '_virtualworker_';
+    window.addEventListener(name, callback);
+  },
   dispatchEvent: window.dispatchEvent.bind(window),
 
   // WindowBase64
