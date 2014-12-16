@@ -41,6 +41,17 @@ function SmartWorker(url) {
 };
 
 function WorkerSandboxScope(url)  {
+  var urlHelper = document.createElement('a');
+  urlHelper.href = url;
+
+  for (var prop in this.location) {
+    if (typeof urlHelper[prop] === 'function') {
+      this.location[prop] = urlHelper[prop].bind(urlHelper);
+    } else {
+      this.location[prop] = urlHelper[prop];
+    }
+  }
+
   this.self = this;
 };
 
@@ -54,7 +65,6 @@ WorkerSandboxScope.prototype = {
   performance: {
     now: window.performance.now.bind(window.performance)
   },
-  // XXX https://developer.mozilla.org/en-US/docs/Web/API/WorkerLocation
   location: {
     // URLUtilsReadOnly Properties
     href: null,
@@ -68,9 +78,7 @@ WorkerSandboxScope.prototype = {
     hash: null,
 
     // URLUtilsReadOnly Methods
-    toString: function() {
-      return '';
-    }
+    toString: null
   },
 
   navigator: {
@@ -121,12 +129,12 @@ WorkerSandboxScope.prototype = {
   clearTimeout: window.clearTimeout.bind(window),
 
   postMessage: function(message) {
-      var event = new CustomEvent('message_workerscope_', {
-        detail: {
-          data: message
-        }
-      });
-      window.dispatchEvent(event);
+    var event = new CustomEvent('message_workerscope_', {
+      detail: {
+        data: message
+      }
+    });
+    window.dispatchEvent(event);
   },
   XMLHttpRequest: window.XMLHttpRequest,
   Worker: window.Worker,
