@@ -90,11 +90,8 @@ WorkerSandboxScope.prototype = {
   clearTimeout: window.clearTimeout.bind(window),
 
   postMessage: function(message) {
-    var event = new CustomEvent('message_workerscope_', {
-      detail: {
-        data: message
-      }
-    });
+    var event = new CustomEvent('message_workerscope_');
+    event.data = message;
     window.dispatchEvent(event);
   },
   XMLHttpRequest: window.XMLHttpRequest,

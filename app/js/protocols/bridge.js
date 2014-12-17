@@ -75,7 +75,7 @@ Bridge.prototype = {
   },
 
   handleEvent: function bridge_handleEvent(e) {
-    var json = e.data || e.detail.data;
+    var json = e.data;
     if (!this.checkMessage(json)) {
       return;
     }

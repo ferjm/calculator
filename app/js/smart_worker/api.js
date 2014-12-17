@@ -23,11 +23,8 @@ function SmartWorker(url) {
     onmessage: null,
 
     postMessage: function vw_postMessage(message, transferable) {
-      var event = new CustomEvent('message_virtualworker_', {
-        detail: {
-          data: message
-        }
-      });
+      var event = new CustomEvent('message_virtualworker_');
+      event.data = message;
       window.dispatchEvent(event);
     },
 
