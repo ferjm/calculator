@@ -31,6 +31,8 @@ var kCacheFiles = [
 
   // Smart Workers
   '/calculator/app/js/smart_worker/api.js',
+  '/calculator/app/js/smart_worker/worker_sandbox.js',
+  '/calculator/app/js/smart_worker/worker_sandbox_scope.js',
   '/calculator/app/js/service/smartworker.js',
 
   // protocols

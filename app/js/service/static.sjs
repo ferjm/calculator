@@ -67,7 +67,8 @@ var StaticResources = {
     inlineCache '/app/js/cache/api.js'
     inlineCache '/app/js/service/api.js'
     inlineCache '/app/js/smart_worker/api.js'
-    inlineCache '/app/js/smart_worker/worker_api.js'
+    inlineCache '/app/js/smart_worker/worker_sandbox.js'
+    inlineCache '/app/js/smart_worker/worker_sandbox_scope.js'
     inlineCache '/app/js/service/smartworker.js'
   }
 };
