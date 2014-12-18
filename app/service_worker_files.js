@@ -3,6 +3,7 @@
 var kCacheFiles = [
   // html
   '/calculator/app/index.html',
+  '/calculator/app/cache.html',
 
   // style
   '/calculator/app/style/calculator.css',
@@ -12,6 +13,7 @@ var kCacheFiles = [
 
   // scripts
   '/calculator/app/js/utils.js',
+  '/calculator/app/js/cache.js',
   '/calculator/app/js/string-polyfill.js',
   '/calculator/app/js/calculator.js',
   '/calculator/app/js/calculator_sw.js',
@@ -46,8 +48,6 @@ var kCacheFiles = [
   '/calculator/app/js/protocols/protocol_helper.js',
   '/calculator/app/js/protocols/ipdl/PUpdate.ipdl',
   '/calculator/app/js/protocols/ipdl/PService.ipdl',
-  '/calculator/app/js/protocols/ipdl/PCache.ipdl',
-  '/calculator/app/js/protocols/ipdl/PCacheStorage.ipdl',
 
   '/calculator/patches/nightly_0.0.1...nightly_master',
   '/calculator/patches/nightly_0.0.1.1...nightly_master'

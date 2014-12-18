@@ -1,9 +1,0 @@
-
-protocol PCache
-{
-  window:
-    Put(key, response);
-    Delete(key);
-
-  serviceworker:
-};

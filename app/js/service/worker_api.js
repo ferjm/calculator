@@ -13,8 +13,8 @@ protocol.recvApplyUpdate = function(resolve, reject, args) {
   for (var filename in rv) {
     filesToUpdate++;
 
-    cachesAPI.match(filename).then((function(filename, response) {
-      cachesAPI.open('calculator-cache-v4').then((function(filename, cache) {
+    caches.match(filename).then((function(filename, response) {
+      caches.open('calculator-cache-v4').then((function(filename, cache) {
 
         var originalUrl = filename;
         cache.delete(originalUrl).then(function onDeleted() {

@@ -4,15 +4,15 @@ importScripts('/calculator/app/js/service/utils.js');
 importScripts('/calculator/app/js/service/static.js');
 importScripts('/calculator/app/js/service/smartworker.js');
 importScripts('/calculator/app/js/service/worker_api.js');
-importScripts('/calculator/app/js/cachestorage/worker_api.js');
 
 var worker = new ServiceWorker();
-var cachesAPI = new CacheStorageAPI();
 
 // lifecycle events
 worker.oninstall = function(e) {
+  importScripts('/calculator/app/service_worker_files.js');
+
   e.waitUntil(
-    cachesAPI.open('calculator-cache-v4').then(function(cache) {
+    caches.open('calculator-cache-v4').then(function(cache) {
       return cache.addAll(kCacheFiles);
     })
   );
@@ -27,12 +27,8 @@ worker.onfetch = function(e) {
     return;
   }
 
-  if (StaticResources.handle(e)) {
-    return;
-  }
-
   e.respondWith(
-    cachesAPI.match(e.request.url).then(function(response) {
+    caches.match(e.request.url).then(function(response) {
       if (!response) {
         debug('going do to a fetch for for ' + e.request.url + ', might go bad\n');
       }

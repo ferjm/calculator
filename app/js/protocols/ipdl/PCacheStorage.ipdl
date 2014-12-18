@@ -1,8 +1,0 @@
-
-protocol PCacheStorage
-{
-  window:
-    Match(key);
-
-  serviceworker:
-};
