@@ -78,7 +78,6 @@ var SmartWorkers = {
   },
 
   resources: {
-    inlineCache '/app/js/smart_worker/worker_api.js'
     inlineCache '/app/js/update/worker_api.js'
   }
 };
