@@ -18,4 +18,4 @@ node_modules/
 *.swo
 *~
 
-app/js/service/smartworkers.js
+app/js/service/smartworker.js
