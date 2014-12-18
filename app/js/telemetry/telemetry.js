@@ -5,15 +5,28 @@
 
 function Telemetry = {};
 
+Telemetry.HISTOGRAM_EXPONENTIAL = 0;
+Telemetry.HISTOGRAM_LINEAR = 1;
+Telemetry.HISTOGRAM_BOOLEAN = 2;
+Telemetry.HISTOGRAM_FLAG = 3;
+Telemetry.HISTOGRAM_COUNT = 4;
+
+Telemetry.canSend = false;
+
+Telemetry.canRecord = false;
+
 Telemetry.registerHistogram = function(url, name, type, min, max, count) {
 };
 
-Telemetry.getHistogram = function(url, name) {
+Telemetry.unregisterHistogram = function(url, name) {
 };
 
 Telemetry.unregisterHistograms = function(url) {
 };
 
-Telemetry.canSend = false;
+Telemetry.getHistogram = function(url, name) {
+};
 
-Telemetry.canRecord = false;
+Telemetry.getHistograms = function() {
+};
+

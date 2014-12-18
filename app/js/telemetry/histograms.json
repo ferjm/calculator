@@ -1,0 +1,20 @@
+{
+  "PAGE_LOAD_TIME": {
+    "description": "Page load time"
+  },
+  "PAGE_USAGE_TIME": {
+    "description": "Page usage time"
+  },
+  "WORKER_LOAD_TIME": {
+    "description": "Worker load time"
+  },
+  "IPDL_HANG": {
+    "description": "Hangs in IPDL messages"
+  },
+  "HARDWARE_MEMORY": {
+    "description": "Hardware memory"
+  },
+  "HARDWARE_CORES": {
+    "description": "Hardware number of cores"
+  }
+}
