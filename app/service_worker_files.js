@@ -49,6 +49,9 @@ var kCacheFiles = [
   '/calculator/app/js/protocols/ipdl/PUpdate.ipdl',
   '/calculator/app/js/protocols/ipdl/PService.ipdl',
 
+  // Telemetry
+  '/calculator/app/js/telemetry/telemetry.js',
+
   '/calculator/patches/nightly_0.0.1...nightly_master',
   '/calculator/patches/nightly_0.0.1.1...nightly_master'
 ];
