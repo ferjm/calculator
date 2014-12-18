@@ -1,7 +1,6 @@
 'use strict';
 
 importScripts('/calculator/app/js/service/utils.js');
-importScripts('/calculator/app/js/service/static.js');
 importScripts('/calculator/app/js/service/smartworker.js');
 importScripts('/calculator/app/js/service/worker_api.js');
 
