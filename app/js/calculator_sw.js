@@ -50,3 +50,5 @@ function lookForUpdates() {
   });
 }
 
+importScripts('/calculator/app/js/telemetry/telemetry.js');
+

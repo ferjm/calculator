@@ -3,7 +3,7 @@
  * Telemetry is a stats stuff.
  */
 
-function Telemetry = {};
+function Telemetry() {};
 
 Telemetry.HISTOGRAM_EXPONENTIAL = 0;
 Telemetry.HISTOGRAM_LINEAR = 1;
@@ -30,3 +30,5 @@ Telemetry.getHistogram = function(url, name) {
 Telemetry.getHistograms = function() {
 };
 
+var loadTime = Date.now() - performance.timing.navigationStart;
+debug(loadTime);
