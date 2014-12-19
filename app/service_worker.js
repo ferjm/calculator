@@ -1,8 +1,8 @@
 'use strict';
 
 importScripts('/calculator/app/js/service/utils.js');
-importScripts('/calculator/app/js/service/smartworker.js');
 importScripts('/calculator/app/js/service/worker_api.js');
+importScripts('/calculator/app/js/smart_worker/smartworker.js');
 
 var worker = new ServiceWorker();
 

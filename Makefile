@@ -1,5 +1,5 @@
 build:
-	sjs -r -o app/js/service/smartworker.js app/js/service/smartworker.sjs
+	sjs -r -o app/js/smart_worker/smartworker.js app/js/smart_worker/smartworker.sjs
 
 
 PROFILE_DIR=/tmp/maple_profile_dir
