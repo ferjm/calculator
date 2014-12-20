@@ -3,7 +3,9 @@
 importScripts('/calculator/app/js/protocols/protocol_helper.js');
 
 function UpdateAPI() {
-  var worker = new SmartWorker('/calculator/app/js/update/worker_api.js');
+  var script = '/calculator/app/js/update/worker_api.js';
+  var worker = ('SmartWorker' in this) ? new SmartWorker(script)
+                                       : new Worker(script);
   this.protocol = new IPDLProtocol('update', worker);
 }
 
