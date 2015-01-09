@@ -1,8 +1,6 @@
 'use strict';
 
 importScripts('/calculator/app/js/service/utils.js');
-importScripts('/calculator/app/js/service/worker_api.js');
-importScripts('/calculator/app/js/smart_worker/smartworker.js');
 
 var worker = new ServiceWorker();
 
@@ -28,10 +26,10 @@ worker.onactive = function(e) {
 worker.onfetch = function(e) {
   debug(e.type + ': ' + e.request.url);
 
-  if (SmartWorkers.handle(e)) {
-    debug('SmartWorker handle');
-    return;
-  }
+//  if (SmartWorkers.handle(e)) {
+//    debug('SmartWorker handle');
+//    return;
+//  }
 
   e.respondWith(
     caches.match(e.request.url).then(function(response) {
