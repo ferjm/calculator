@@ -9,13 +9,15 @@ var worker = new ServiceWorker();
 // lifecycle events
 worker.oninstall = function(e) {
   debug('oninstall');
-/*  importScripts('/calculator/app/service_worker_files.js');
+  importScripts('/calculator/app/service_worker_files.js');
 
   e.waitUntil(
     caches.open('calculator-cache-v4').then(function(cache) {
-      return cache.addAll(kCacheFiles);
+      cache.addAll(kCacheFiles);
+      debug('Not waiting for cache to populate');
+      return Promise.resolve();
     })
-  );*/
+  );
 };
 
 worker.onactive = function(e) {
@@ -25,7 +27,7 @@ worker.onactive = function(e) {
 // network events
 worker.onfetch = function(e) {
   debug(e.type + ': ' + e.request.url);
-/*
+
   if (SmartWorkers.handle(e)) {
     debug('SmartWorker handle');
     return;
@@ -38,5 +40,5 @@ worker.onfetch = function(e) {
       }
       return response || fetch(e.request);
     })
-  )*/
+  )
 };
