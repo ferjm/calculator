@@ -8,20 +8,24 @@ var worker = new ServiceWorker();
 
 // lifecycle events
 worker.oninstall = function(e) {
-  importScripts('/calculator/app/service_worker_files.js');
+  debug('oninstall');
+/*  importScripts('/calculator/app/service_worker_files.js');
 
   e.waitUntil(
     caches.open('calculator-cache-v4').then(function(cache) {
       return cache.addAll(kCacheFiles);
     })
-  );
+  );*/
 };
 
+worker.onactive = function(e) {
+  debug('onactive');  
+};
 
 // network events
 worker.onfetch = function(e) {
   debug(e.type + ': ' + e.request.url);
-
+/*
   if (SmartWorkers.handle(e)) {
     debug('SmartWorker handle');
     return;
@@ -34,5 +38,5 @@ worker.onfetch = function(e) {
       }
       return response || fetch(e.request);
     })
-  )
+  )*/
 };
