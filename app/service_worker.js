@@ -37,6 +37,8 @@ worker.onfetch = function(e) {
         debug('going do to a fetch for for ' + e.request.url + ', might go bad\n');
       }
       return response || fetch(e.request);
+    }, function(error) {
+      debug(e.request.url + ' ' + error);
     })
   )
 };
