@@ -11,9 +11,7 @@ worker.oninstall = function(e) {
 
   e.waitUntil(
     caches.open('calculator-cache-v4').then(function(cache) {
-      cache.addAll(kCacheFiles);
-      debug('Not waiting for cache to populate');
-      return Promise.resolve();
+      return cache.addAll(kCacheFiles);
     })
   );
 };
@@ -34,7 +32,7 @@ worker.onfetch = function(e) {
   e.respondWith(
     caches.match(e.request.url).then(function(response) {
       if (!response) {
-        debug('going do to a fetch for for ' + e.request.url + ', might go bad\n');
+        debug('going do to a fetch for ' + e.request.url + ', might go bad\n');
       }
       return response || fetch(e.request);
     }, function(error) {
