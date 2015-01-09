@@ -61,7 +61,7 @@ WorkerSandboxScope.prototype = {
 
   // WorkerGlobalScope Methods
   close: null,
-  dump: dump.bind(window),
+  dump: function() {},
   importScripts: function(src) { /* inlined */ },
 
   // Event Handlers
